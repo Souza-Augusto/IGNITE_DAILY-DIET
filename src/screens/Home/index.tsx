@@ -1,20 +1,9 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
+import { Header } from '@components/Header';
+import { Container } from './styles';
 export function Home(props: any) {
   return (
-    <TouchableOpacity
-      onPress={() => props.navigation.navigate('exemple')}
-      style={styles.container}
-    >
-      <Text>Open up App.js to start working on your app!</Text>
-    </TouchableOpacity>
+    <Container>
+      <Header />
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
