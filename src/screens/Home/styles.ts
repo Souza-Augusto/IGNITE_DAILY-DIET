@@ -1,21 +1,24 @@
 import styled, { css } from 'styled-components/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ArrowUpRight from '@assets/images/svg/ArrowUpRight.svg';
+import { TouchableOpacity } from 'react-native';
 
 export const Container = styled(SafeAreaView)`
   flex: 1;
   background-color: ${({ theme }) => theme.COLORS.GRAY_700};
-  padding: 24px;
+  padding-top: 24px;
 `;
 
-export const Card = styled.View`
-  width: 100%;
+export const Card = styled(TouchableOpacity)`
   background-color: ${({ theme }) => theme.COLORS.GREEN_LIGHT};
   border-radius: 8px;
-  margin-top: 30px;
   align-items: center;
+  justify-content: center;
   padding-bottom: 24px;
+  margin-top: 30px;
   margin-bottom: 40px;
+  margin-left: 24px;
+  margin-right: 24px;
 `;
 
 export const CardTitle = styled.Text`
@@ -44,6 +47,7 @@ export const Title = styled.Text`
     color: ${theme.COLORS.GRAY_100};
     font-family: ${theme.FONT_FAMILY.REGULAR};
     margin-bottom: 8px;
+    margin-left: 24px;
   `}
 `;
 export const DateContainer = styled.View`
@@ -55,5 +59,7 @@ export const Date = styled.Text`
     color: ${theme.COLORS.GRAY_100};
     font-family: ${theme.FONT_FAMILY.BOLD};
     margin-bottom: 8px;
+    margin-left: 24px;
+    margin-top: 32px;
   `}
 `;

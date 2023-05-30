@@ -17,7 +17,9 @@ import { Button } from '@components/Button';
 import { Meal_Card } from '@components/Meal_Card';
 import { mealDTO } from 'src/dtos/mealDTO';
 
-export function Home(props: any) {
+import { useNavigation } from '@react-navigation/native';
+
+export function Home() {
   const DATA = [
     {
       title: '20.03.2023',
@@ -37,20 +39,21 @@ export function Home(props: any) {
     },
   ] as mealDTO[];
 
+  const navigation = useNavigation();
+
   return (
     <Container>
       <Header />
-      <Card>
+      <Card
+        activeOpacity={0.5}
+        onPress={() => navigation.navigate('statistics')}
+      >
         <ArrowUpRightIcon />
         <CardTitle>90,86%</CardTitle>
         <CardDescription>das refeições dentro da sua dieta</CardDescription>
       </Card>
       <Title>Refeições</Title>
-      <Button
-        style={{ marginBottom: 32 }}
-        title='Nova refeição'
-        before={<ArrowUpRight />}
-      />
+      <Button title='Nova refeição' before={<ArrowUpRight />} />
       <SectionList
         showsVerticalScrollIndicator={false}
         sections={DATA}
