@@ -16,7 +16,7 @@ export default function App() {
     <>
       <ThemeProvider theme={theme}>
         <StatusBar
-          barStyle={'light-content'}
+          barStyle={'dark-content'}
           translucent
           backgroundColor={'transparent'}
         />

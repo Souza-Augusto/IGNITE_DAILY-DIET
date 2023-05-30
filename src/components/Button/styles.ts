@@ -8,15 +8,16 @@ type Props = {
 };
 
 export const Container = styled(TouchableOpacity)<Props>`
-  width: 100%;
   padding: 16px;
+  margin-left: 24px;
+  margin-right: 24px;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   background-color: ${({ theme, type }) =>
     type === 'PRIMARY' ? theme.COLORS.GRAY_200 : theme.COLORS.GRAY_700};
   border-radius: 6px;
-  border-width: ${({ type }) => type === 'SECONDARY' && 1}px;
+  border-width: ${({ type }) => (type === 'SECONDARY' ? 1 : 0)}px;
   border-color: ${({ theme, type }) =>
     type === 'SECONDARY' && theme.COLORS.GRAY_100};
 `;

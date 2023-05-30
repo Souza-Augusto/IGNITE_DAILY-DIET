@@ -8,7 +8,6 @@ type Props = {
 };
 
 export const Container = styled(TouchableOpacity)`
-  width: 100%;
   border-color: ${({ theme }) => theme.COLORS.GRAY_500};
   border-width: 1px;
   padding: 15px;
@@ -17,6 +16,8 @@ export const Container = styled(TouchableOpacity)`
   align-items: center;
   margin-top: 5px;
   margin-bottom: 5px;
+  margin-right: 24px;
+  margin-left: 24px;
 `;
 export const Hour = styled.Text`
   ${({ theme }) => css`
