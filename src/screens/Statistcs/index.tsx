@@ -13,7 +13,6 @@ import {
 } from './styles';
 import ArrowLeft from '@assets/images/svg/ArrowLeft.svg';
 import { useNavigation } from '@react-navigation/native';
-import theme from '@theme/index';
 
 export function Statistics() {
   const navigation = useNavigation();
