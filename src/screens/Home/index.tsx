@@ -8,6 +8,7 @@ import {
   Title,
   Date,
   DateContainer,
+  PlusIcon,
 } from './styles';
 
 import { SectionList } from 'react-native';
@@ -53,7 +54,11 @@ export function Home() {
         <CardDescription>das refeições dentro da sua dieta</CardDescription>
       </Card>
       <Title>Refeições</Title>
-      <Button title='Nova refeição' before={<ArrowUpRight />} />
+      <Button
+        onPress={() => navigation.navigate('newMeal')}
+        title='Nova refeição'
+        before={<PlusIcon />}
+      />
       <SectionList
         showsVerticalScrollIndicator={false}
         sections={DATA}

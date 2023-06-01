@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ArrowUpRight from '@assets/images/svg/ArrowUpRight.svg';
+import Plus from '@assets/images/svg/Plus.svg';
 import { TouchableOpacity } from 'react-native';
 
 export const Container = styled(SafeAreaView)`
@@ -63,3 +64,6 @@ export const Date = styled.Text`
     margin-top: 32px;
   `}
 `;
+export const PlusIcon = styled(Plus).attrs(() => ({
+  marginRight: 10,
+}))``;

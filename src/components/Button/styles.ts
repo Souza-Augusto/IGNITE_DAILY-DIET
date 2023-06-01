@@ -27,6 +27,5 @@ export const Title = styled.Text<Props>`
     color: ${type === 'PRIMARY' ? theme.COLORS.WHITE : theme.COLORS.GRAY_100};
     font-family: ${theme.FONT_FAMILY.BOLD};
     font-size: ${theme.FONT_SIZE.M}px;
-    margin-left: 10px;
   `}
 `;
