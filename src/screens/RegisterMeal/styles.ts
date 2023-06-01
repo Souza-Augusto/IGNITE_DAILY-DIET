@@ -1,14 +1,11 @@
 import styled, { css } from 'styled-components/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Input } from '@components/Input';
-import { Button as TouchableOpacity } from '@components/Button';
+import { Button } from '@components/Button';
 import { TextInputProps } from 'react-native';
 
 type MealTypeProps = {
-  mealType: 'INDIET' | 'OUTDIET';
-};
-type ButtonProps = {
-  selectedType: string;
+  mealType: string;
 };
 
 export const Container = styled(SafeAreaView)`
@@ -96,25 +93,25 @@ export const MealsTypeButtonContainer = styled.View`
   padding-left: 16px;
   padding-right: 16px;
 `;
-export const MealsTypeButton = styled(TouchableOpacity)<ButtonProps>`
+export const MealsTypeButton = styled(Button)<MealTypeProps>`
   flex: 1;
   margin: 8px;
-  border: ${({ selectedType }) => (selectedType ? 1 : 0)}px;
-  border-color: ${({ theme, selectedType }) => {
-    if (selectedType === 'INDIET') {
+  border: ${({ mealType }) => (mealType ? 1 : 0)}px;
+  border-color: ${({ theme, mealType }) => {
+    if (mealType === 'INDIET') {
       return theme.COLORS.GREEN_DARK;
     }
-    if (selectedType === 'OUTDIET') {
+    if (mealType === 'OUTDIET') {
       return theme.COLORS.RED_DARK;
     } else {
       return null;
     }
   }};
-  background-color: ${({ theme, selectedType }) => {
-    if (selectedType === 'INDIET') {
+  background-color: ${({ theme, mealType }) => {
+    if (mealType === 'INDIET') {
       return theme.COLORS.GREEN_LIGHT;
     }
-    if (selectedType === 'OUTDIET') {
+    if (mealType === 'OUTDIET') {
       return theme.COLORS.RED_LIGHT;
     } else {
       return theme.COLORS.GRAY_600;
@@ -133,4 +130,46 @@ export const ButtonContainer = styled.View`
   flex: 1;
   justify-content: flex-end;
   padding-bottom: 10px;
+`;
+export const ModalContainer = styled.View`
+  flex: 1;
+  background-color: ${({ theme }) => theme.COLORS.GRAY_700};
+  align-items: center;
+  justify-content: center;
+`;
+export const ModalTitle = styled.Text<MealTypeProps>`
+  ${({ theme, mealType }) => css`
+    font-size: ${theme.FONT_SIZE.XL}px;
+    color: ${mealType === 'INDIET'
+      ? theme.COLORS.GREEN_DARK
+      : theme.COLORS.RED_DARK};
+    font-family: ${theme.FONT_FAMILY.BOLD};
+  `}
+`;
+
+export const Noticed = styled.Text`
+  ${({ theme }) => css`
+    color: ${theme.COLORS.GRAY_100};
+    font-family: ${theme.FONT_FAMILY.REGULAR};
+    font-size: ${theme.FONT_SIZE.M}px;
+    margin-bottom: 40px;
+    margin-top: 8px;
+  `}
+`;
+export const FeaturedNoticed = styled.Text`
+  ${({ theme }) => css`
+    color: ${theme.COLORS.GRAY_100};
+    font-family: ${theme.FONT_FAMILY.BOLD};
+    font-size: ${theme.FONT_SIZE.M}px;
+    margin-bottom: 40px;
+    margin-top: 8px;
+  `}
+`;
+export const Image = styled.Image`
+  object-fit: contain;
+  margin-bottom: 32px;
+`;
+export const ConfirmRegister = styled(Button)`
+  padding-left: 24px;
+  padding-right: 24px;
 `;
