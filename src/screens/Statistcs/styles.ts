@@ -37,7 +37,6 @@ export const Description = styled.Text`
 
 export const StatisticsContainer = styled.View`
   flex: 1;
-
   padding-top: 30px;
   background-color: ${({ theme }) => theme.COLORS.GRAY_700};
   margin-top: 38px;
