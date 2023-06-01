@@ -55,7 +55,7 @@ export function Home() {
       </Card>
       <Title>Refeições</Title>
       <Button
-        onPress={() => navigation.navigate('newMeal')}
+        onPress={() => navigation.navigate('registerMeal')}
         title='Nova refeição'
         before={<PlusIcon />}
       />
