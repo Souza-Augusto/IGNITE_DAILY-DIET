@@ -69,7 +69,12 @@ export function Home() {
           </DateContainer>
         )}
         renderItem={({ item }) => (
-          <Meal_Card hour={item.hour} meal={item.meal} status={item.status} />
+          <Meal_Card
+            onPress={() => navigation.navigate('mealDetails')}
+            hour={item.hour}
+            meal={item.meal}
+            status={item.status}
+          />
         )}
       />
     </Container>
