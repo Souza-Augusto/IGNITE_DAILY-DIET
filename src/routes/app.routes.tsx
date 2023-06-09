@@ -5,7 +5,14 @@ import { RegisterMeal } from '@screens/RegisterMeal';
 import { Statistics } from '@screens/Statistcs';
 import { MealDetails } from '@screens/MealDetails';
 
-const { Navigator, Screen } = createNativeStackNavigator();
+type routes = {
+  home: undefined;
+  statistics: undefined;
+  registerMeal: undefined;
+  mealDetails: undefined;
+};
+
+const { Navigator, Screen } = createNativeStackNavigator<routes>();
 
 export function AppRoutes() {
   return (
