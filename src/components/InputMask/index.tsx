@@ -1,13 +1,14 @@
 import { Container } from './styles';
-import { TextInputProps } from 'react-native';
+import { TextInputMaskProps } from 'react-native-masked-text';
 import theme from '@theme/index';
 
-export function Input({ ...rest }: TextInputProps) {
+export function InputMask({ type, ...rest }: TextInputMaskProps) {
   return (
     <Container
       {...rest}
       selectionColor={theme.COLORS.GRAY_500}
       placeholderTextColor={theme.COLORS.GRAY_400}
-    />
+      type={type}
+    ></Container>
   );
 }

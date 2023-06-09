@@ -66,4 +66,6 @@ export const Date = styled.Text`
 `;
 export const PlusIcon = styled(Plus).attrs(() => ({
   marginRight: 10,
+  height: 20,
+  width: 20,
 }))``;
