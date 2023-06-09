@@ -5,7 +5,7 @@ import Pencil from '@assets/images/svg/Simple.svg';
 import Trash from '@assets/images/svg/Trash.svg';
 
 type Props = {
-  mealType: 'INDIET' | 'OUTDIET';
+  mealType: 'ONDIET' | 'OUTDIET';
 };
 
 export const Container = styled(SafeAreaView)`
@@ -91,7 +91,7 @@ export const MealType = styled.View<Props>`
   height: 8px;
   border-radius: 4px;
   background-color: ${({ theme, mealType }) =>
-    mealType === 'INDIET' ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
+    mealType === 'ONDIET' ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
 `;
 export const MealTypeDescription = styled.Text`
   ${({ theme }) => css`

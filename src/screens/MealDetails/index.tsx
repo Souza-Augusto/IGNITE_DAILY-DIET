@@ -40,7 +40,7 @@ export function MealDetails() {
         <DateTimeTitle>Data e Hora</DateTimeTitle>
         <DateTime>10/09/2023 às 20:00</DateTime>
         <MealTypeContainer>
-          <MealType mealType='INDIET' />
+          <MealType mealType='ONDIET' />
           <MealTypeDescription numberOfLines={1}>
             dentro da dietaaaaa
           </MealTypeDescription>
