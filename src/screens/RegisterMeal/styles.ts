@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Input } from '@components/Input';
 import { Button } from '@components/Button';
 import { TextInputProps } from 'react-native';
+import { InputMask } from '@components/InputMask';
 
 type MealTypeProps = {
   mealType: string;
@@ -75,7 +76,7 @@ export const DateTime = styled.Text`
   `}
 `;
 
-export const InputMask = styled(Input)<TextInputProps>`
+export const DateTimeInput = styled(InputMask)<TextInputProps>`
   margin-left: 10px;
   margin-right: 10px;
 `;
@@ -98,7 +99,7 @@ export const MealsTypeButton = styled(Button)<MealTypeProps>`
   margin: 8px;
   border: ${({ mealType }) => (mealType ? 1 : 0)}px;
   border-color: ${({ theme, mealType }) => {
-    if (mealType === 'INDIET') {
+    if (mealType === 'ONDIET') {
       return theme.COLORS.GREEN_DARK;
     }
     if (mealType === 'OUTDIET') {
@@ -108,7 +109,7 @@ export const MealsTypeButton = styled(Button)<MealTypeProps>`
     }
   }};
   background-color: ${({ theme, mealType }) => {
-    if (mealType === 'INDIET') {
+    if (mealType === 'ONDIET') {
       return theme.COLORS.GREEN_LIGHT;
     }
     if (mealType === 'OUTDIET') {
@@ -123,14 +124,10 @@ export const MealsType = styled.View<MealTypeProps>`
   width: 8px;
   border-radius: 4px;
   background-color: ${({ theme, mealType }) =>
-    mealType === 'INDIET' ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
+    mealType === 'ONDIET' ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
   margin-right: 10px;
 `;
-export const ButtonContainer = styled.View`
-  flex: 1;
-  justify-content: flex-end;
-  padding-bottom: 10px;
-`;
+
 export const ModalContainer = styled.View`
   flex: 1;
   background-color: ${({ theme }) => theme.COLORS.GRAY_700};
@@ -140,7 +137,7 @@ export const ModalContainer = styled.View`
 export const ModalTitle = styled.Text<MealTypeProps>`
   ${({ theme, mealType }) => css`
     font-size: ${theme.FONT_SIZE.XL}px;
-    color: ${mealType === 'INDIET'
+    color: ${mealType === 'ONDIET'
       ? theme.COLORS.GREEN_DARK
       : theme.COLORS.RED_DARK};
     font-family: ${theme.FONT_FAMILY.BOLD};
@@ -172,4 +169,14 @@ export const Image = styled.Image`
 export const ConfirmRegister = styled(Button)`
   padding-left: 24px;
   padding-right: 24px;
+`;
+export const ErrorMessage = styled.Text`
+  ${({ theme }) => css`
+    color: ${theme.COLORS.RED_DARK};
+    font-family: ${theme.FONT_FAMILY.BOLD};
+    font-size: ${theme.FONT_SIZE.S}px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-left: 24px;
+  `}
 `;
