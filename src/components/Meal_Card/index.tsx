@@ -11,16 +11,16 @@ import {
 type Props = TouchableOpacityProps & {
   hour: string;
   meal: string;
-  status: mealStatus;
+  type: mealStatus;
 };
 
-export function Meal_Card({ hour, meal, status = 'ONDIET', ...rest }: Props) {
+export function Meal_Card({ hour, meal, type, ...rest }: Props) {
   return (
     <Container {...rest}>
       <Hour>{hour}</Hour>
       <Delimiter />
       <Meal numberOfLines={1}>{meal}</Meal>
-      <MealTypeStatus status={status} />
+      <MealTypeStatus type={type} />
     </Container>
   );
 }

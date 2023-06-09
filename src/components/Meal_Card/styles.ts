@@ -4,7 +4,7 @@ import { TouchableOpacity } from 'react-native';
 export type mealStatus = 'ONDIET' | 'OUTDIET';
 
 type Props = {
-  status: mealStatus;
+  type: mealStatus;
 };
 
 export const Container = styled(TouchableOpacity)`
@@ -44,8 +44,8 @@ export const Meal = styled.Text`
 `;
 
 export const MealTypeStatus = styled.View<Props>`
-  background-color: ${({ theme, status }) =>
-    status === 'ONDIET' ? theme.COLORS.GREEN_MID : theme.COLORS.RED_MID};
+  background-color: ${({ theme, type }) =>
+    type === 'ONDIET' ? theme.COLORS.GREEN_MID : theme.COLORS.RED_MID};
   height: 14px;
   width: 14px;
   border-radius: 7px;
