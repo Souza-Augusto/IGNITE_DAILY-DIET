@@ -10,6 +10,7 @@ type routes = {
   home: undefined;
   statistics: undefined;
   registerMeal?: {
+    id: string;
     hour: string;
     date: string;
     name: string;
@@ -17,6 +18,7 @@ type routes = {
     description: string;
   };
   mealDetails: {
+    id: string;
     hour: string;
     date: string;
     name: string;
