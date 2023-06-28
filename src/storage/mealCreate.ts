@@ -7,26 +7,27 @@ export async function MealCreate(meals: mealDTO) {
   try {
     const storageGroups = await mealGetAll();
 
-    const dateAlreadyExists = storageGroups.find(
+    const existingDateIndex = storageGroups.findIndex(
       (item) => item.title === meals.title
     );
 
-    if (dateAlreadyExists) {
-      dateAlreadyExists.data = [...dateAlreadyExists.data, ...meals.data];
+    if (existingDateIndex !== -1) {
+      const existingDate = storageGroups[existingDateIndex];
+      existingDate.data.push(...meals.data);
 
-      const addMealsArray = storageGroups.filter(
-        (item) => item.title !== meals.title
-      );
+      const updatedStorageGroups = [
+        ...storageGroups.slice(0, existingDateIndex),
+        existingDate,
+        ...storageGroups.slice(existingDateIndex + 1),
+      ];
 
-      const storage = JSON.stringify([...addMealsArray, dateAlreadyExists]);
-
+      const storage = JSON.stringify(updatedStorageGroups);
       await AsyncStorage.setItem(MEALS_COLLECTION, storage);
-      return;
+    } else {
+      storageGroups.push(meals);
+      const storage = JSON.stringify(storageGroups);
+      await AsyncStorage.setItem(MEALS_COLLECTION, storage);
     }
-
-    const storage = JSON.stringify([...storageGroups, meals]);
-
-    await AsyncStorage.setItem(MEALS_COLLECTION, storage);
   } catch (error) {
     throw error;
   }
