@@ -9,22 +9,8 @@ import { mealDTO } from 'src/dtos/mealDTO';
 type routes = {
   home: undefined;
   statistics: undefined;
-  registerMeal?: {
-    id: string;
-    hour: string;
-    date: string;
-    name: string;
-    type: 'OUTDIET' | 'ONDIET';
-    description: string;
-  };
-  mealDetails: {
-    id: string;
-    hour: string;
-    date: string;
-    name: string;
-    type: 'OUTDIET' | 'ONDIET';
-    description: string;
-  };
+  registerMeal?: mealDTO;
+  mealDetails: mealDTO;
 };
 
 const { Navigator, Screen } = createNativeStackNavigator<routes>();

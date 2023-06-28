@@ -5,13 +5,13 @@ import Pencil from '@assets/images/svg/Simple.svg';
 import Trash from '@assets/images/svg/Trash.svg';
 
 type Props = {
-  mealType: 'ONDIET' | 'OUTDIET';
+  mealType: boolean;
 };
 
 export const Container = styled(SafeAreaView)<Props>`
   flex: 1;
   background-color: ${({ theme, mealType }) =>
-    mealType === 'ONDIET' ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
+    mealType === true ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
   padding-top: 24px;
 `;
 export const Header = styled.View`
@@ -92,7 +92,7 @@ export const MealType = styled.View<Props>`
   height: 8px;
   border-radius: 4px;
   background-color: ${({ theme, mealType }) =>
-    mealType === 'ONDIET' ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
+    mealType ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
 `;
 export const MealTypeDescription = styled.Text`
   ${({ theme }) => css`

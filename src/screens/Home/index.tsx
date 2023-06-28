@@ -20,25 +20,19 @@ import { mealDTO } from 'src/dtos/mealDTO';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
 import { ListEmpty } from '@components/ListEmpty';
-import { mealGetAll } from '@storage/mealGetAll';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { GetMeals } from '@storage/getMeals';
 
 type dateFormattedArrayProps = {
   title: number;
-  data: [
-    {
-      id: string;
-      hour: string;
-      date: string;
-      name: string;
-      type: 'OUTDIET' | 'ONDIET';
-      description: string;
-    }
-  ];
+  data: mealDTO[];
+};
+type sectionListDataProps = {
+  title: string;
+  data: mealDTO[];
 };
 
 export function Home() {
-  const [data, setData] = useState<mealDTO[]>([]);
+  const [data, setData] = useState<sectionListDataProps[]>([]);
 
   function formatDates(dates: dateFormattedArrayProps[]) {
     const formattedttedDates = dates.map((item) => {
@@ -64,7 +58,7 @@ export function Home() {
     formatDates(decendingDates);
   }
 
-  function convertDates(dates: mealDTO[]) {
+  function convertDates(dates: sectionListDataProps[]) {
     const converttedDates = dates.map((item) => {
       const parts = item.title.split('/');
       const formattedTitle = Number(`${parts[2]}${parts[1]}${parts[0]}`);
@@ -79,7 +73,7 @@ export function Home() {
 
   async function fetchMeals() {
     try {
-      const data = await mealGetAll();
+      const data = await GetMeals();
       convertDates(data);
     } catch (error) {
       console.log(error);
@@ -130,7 +124,7 @@ export function Home() {
             }
             hour={item.hour}
             meal={item.name}
-            type={item.type}
+            healthy={item.healthy}
           />
         )}
         ListEmptyComponent={

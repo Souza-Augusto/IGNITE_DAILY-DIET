@@ -13,7 +13,6 @@ import {
   DateTime,
   Question,
   MealsTypeButtonContainer,
-  MealsTypeButton,
   MealsType,
   ModalContainer,
   ModalTitle,
@@ -22,6 +21,8 @@ import {
   Image,
   ConfirmRegister,
   DateTimeInput,
+  OffDietButton,
+  HealthyMealButton,
 } from './styles';
 import ArrowLeft from '@assets/images/svg/ArrowLeftBlack.svg';
 import { Button } from '@components/Button';
@@ -29,23 +30,21 @@ import { Input } from '@components/Input';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { ScrollView } from 'react-native';
-import { MealCreate } from '@storage/mealCreate';
-import { mealDetailsParams } from 'src/@types/navigate';
+import { NewMealRegister } from '@storage/newMealRegister';
 import { DeleteMeal } from '@storage/deleteMeal';
+import { mealDTO } from 'src/dtos/mealDTO';
 
 type RouteParams = {
-  meal: mealDetailsParams;
+  meal: mealDTO;
 };
 
 export function RegisterMeal() {
-  const [onDiet, setOndiet] = useState('');
-  const [outDiet, setOutDiet] = useState('');
+  const [healthy, setHealthy] = useState<boolean | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [hour, setHour] = useState('');
-  const [id, setId] = useState('');
 
   const currentDate = new Date();
 
@@ -53,16 +52,6 @@ export function RegisterMeal() {
 
   const route = useRoute();
   const params = route.params as RouteParams;
-
-  function selectedMealType(type: string) {
-    if (type === 'ONDIET') {
-      setOndiet(type);
-      setOutDiet('');
-      return;
-    }
-    setOutDiet(type);
-    setOndiet('');
-  }
 
   async function handleOnOpenModal() {
     if (
@@ -105,7 +94,7 @@ export function RegisterMeal() {
       return Alert.alert('Hora inválida.');
     }
 
-    if (onDiet === '' && outDiet === '') {
+    if (healthy === null) {
       return Alert.alert(
         'Por favor informe se a refeição que você deseja está dentro da dieta.'
       );
@@ -113,7 +102,7 @@ export function RegisterMeal() {
 
     if (params?.meal) {
       await DeleteMeal(params.meal);
-      await MealCreate({
+      await NewMealRegister({
         title: date,
         data: [
           {
@@ -121,7 +110,7 @@ export function RegisterMeal() {
             hour,
             date,
             name,
-            type: onDiet ?? outDiet,
+            healthy,
             description,
           },
         ],
@@ -131,7 +120,7 @@ export function RegisterMeal() {
       return;
     }
 
-    await MealCreate({
+    await NewMealRegister({
       title: date,
       data: [
         {
@@ -139,7 +128,7 @@ export function RegisterMeal() {
           hour,
           date,
           name,
-          type: onDiet ?? outDiet,
+          healthy,
           description,
         },
       ],
@@ -149,11 +138,11 @@ export function RegisterMeal() {
 
   useEffect(() => {
     if (params?.meal) {
-      setId(params?.meal.id);
       setName(params.meal.name);
       setDescription(params.meal.description);
       setDate(params.meal.date);
       setHour(params.meal.hour);
+      setHealthy(params.meal.healthy);
     }
   }, []);
 
@@ -161,11 +150,11 @@ export function RegisterMeal() {
     <Container>
       <Modal visible={modalVisible}>
         <ModalContainer>
-          <ModalTitle mealType={onDiet}>
-            {onDiet ? 'Continue assim!' : 'Que pena!'}
+          <ModalTitle mealType={healthy}>
+            {healthy ? 'Continue assim!' : 'Que pena!'}
           </ModalTitle>
           <Noticed>
-            {onDiet ? (
+            {healthy ? (
               <>
                 Você continua{' '}
                 <FeaturedNoticed>dentro da dieta.</FeaturedNoticed> Muito bem!
@@ -179,7 +168,7 @@ export function RegisterMeal() {
           </Noticed>
           <Image
             source={
-              onDiet
+              healthy
                 ? require('@assets/images/png/Illustration(1).png')
                 : require('@assets/images/png/Illustration(2).png')
             }
@@ -247,20 +236,20 @@ export function RegisterMeal() {
           </DateTimeInputContainer>
           <Question>Está dentro da dieta?</Question>
           <MealsTypeButtonContainer>
-            <MealsTypeButton
-              onPress={() => selectedMealType('ONDIET')}
-              mealType={onDiet}
+            <HealthyMealButton
+              onPress={() => setHealthy(true)}
+              mealType={healthy}
               type='SECONDARY'
               title='SIM'
-              before={<MealsType mealType='ONDIET' />}
+              before={<MealsType mealType />}
             />
-            <MealsTypeButton
+            <OffDietButton
               type='SECONDARY'
-              mealType={outDiet}
-              onPress={() => selectedMealType('OUTDIET')}
+              mealType={healthy}
+              onPress={() => setHealthy(false)}
               title='NÃO'
-              before={<MealsType mealType='' />}
-            ></MealsTypeButton>
+              before={<MealsType mealType={false} />}
+            />
           </MealsTypeButtonContainer>
         </ScrollView>
 
