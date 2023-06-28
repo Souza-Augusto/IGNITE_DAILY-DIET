@@ -1,11 +1,11 @@
-import { mealGetAll } from './mealGetAll';
+import { GetMeals } from './getMeals';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MEALS_COLLECTION } from './storageConfig';
-import { mealDetailsParams } from 'src/@types/navigate';
+import { mealDTO } from 'src/dtos/mealDTO';
 
-export async function DeleteMeal(mealToDelete: mealDetailsParams) {
+export async function DeleteMeal(mealToDelete: mealDTO) {
   try {
-    const storageGroups = await mealGetAll();
+    const storageGroups = await GetMeals();
 
     const existingDateIndex = storageGroups.findIndex(
       (item) => item.title === mealToDelete.date
@@ -25,11 +25,7 @@ export async function DeleteMeal(mealToDelete: mealDetailsParams) {
       }
 
       const storage = JSON.stringify(storageGroups);
-      const refreshStorage = await AsyncStorage.setItem(
-        MEALS_COLLECTION,
-        storage
-      );
-      return await mealGetAll();
+      await AsyncStorage.setItem(MEALS_COLLECTION, storage);
     }
   } catch (error) {
     throw error;

@@ -1,11 +1,16 @@
 import { mealDTO } from 'src/dtos/mealDTO';
-import { mealGetAll } from './mealGetAll';
+import { GetMeals } from './getMeals';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MEALS_COLLECTION } from './storageConfig';
 
-export async function MealCreate(meals: mealDTO) {
+type props = {
+  title: string;
+  data: mealDTO[];
+};
+
+export async function NewMealRegister(meals: props) {
   try {
-    const storageGroups = await mealGetAll();
+    const storageGroups = await GetMeals();
 
     const existingDateIndex = storageGroups.findIndex(
       (item) => item.title === meals.title

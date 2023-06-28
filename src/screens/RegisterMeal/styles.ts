@@ -6,7 +6,7 @@ import { TextInputProps } from 'react-native';
 import { InputMask } from '@components/InputMask';
 
 type MealTypeProps = {
-  mealType: string;
+  mealType: boolean | null;
 };
 
 export const Container = styled(SafeAreaView)`
@@ -94,37 +94,48 @@ export const MealsTypeButtonContainer = styled.View`
   padding-left: 16px;
   padding-right: 16px;
 `;
-export const MealsTypeButton = styled(Button)<MealTypeProps>`
+export const HealthyMealButton = styled(Button)<MealTypeProps>`
   flex: 1;
   margin: 8px;
-  border: ${({ mealType }) => (mealType ? 1 : 0)}px;
+  border: ${({ mealType }) => (mealType === true ? 1 : 0)}px;
   border-color: ${({ theme, mealType }) => {
-    if (mealType === 'ONDIET') {
+    if (mealType === true) {
       return theme.COLORS.GREEN_DARK;
-    }
-    if (mealType === 'OUTDIET') {
-      return theme.COLORS.RED_DARK;
-    } else {
-      return null;
     }
   }};
   background-color: ${({ theme, mealType }) => {
-    if (mealType === 'ONDIET') {
+    if (mealType === true) {
       return theme.COLORS.GREEN_LIGHT;
+    } else {
+      return theme.COLORS.GRAY_600;
     }
-    if (mealType === 'OUTDIET') {
+  }};
+`;
+
+export const OffDietButton = styled(Button)<MealTypeProps>`
+  flex: 1;
+  margin: 8px;
+  border: ${({ mealType }) => (mealType === false ? 1 : 0)}px;
+  border-color: ${({ theme, mealType }) => {
+    if (mealType === false) {
+      return theme.COLORS.RED_DARK;
+    }
+  }};
+  background-color: ${({ theme, mealType }) => {
+    if (mealType === false) {
       return theme.COLORS.RED_LIGHT;
     } else {
       return theme.COLORS.GRAY_600;
     }
   }};
 `;
+
 export const MealsType = styled.View<MealTypeProps>`
   height: 8px;
   width: 8px;
   border-radius: 4px;
   background-color: ${({ theme, mealType }) =>
-    mealType === 'ONDIET' ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
+    mealType ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
   margin-right: 10px;
 `;
 
@@ -137,9 +148,7 @@ export const ModalContainer = styled.View`
 export const ModalTitle = styled.Text<MealTypeProps>`
   ${({ theme, mealType }) => css`
     font-size: ${theme.FONT_SIZE.XL}px;
-    color: ${mealType === 'ONDIET'
-      ? theme.COLORS.GREEN_DARK
-      : theme.COLORS.RED_DARK};
+    color: ${mealType ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
     font-family: ${theme.FONT_FAMILY.BOLD};
   `}
 `;

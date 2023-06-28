@@ -19,11 +19,12 @@ import {
 } from './styles';
 import ArrowLeft from '@assets/images/svg/ArrowLeftBlack.svg';
 import { useRoute, useNavigation } from '@react-navigation/native';
-import { mealDetailsParams } from 'src/@types/navigate';
+
 import { DeleteMeal } from '@storage/deleteMeal';
+import { mealDTO } from 'src/dtos/mealDTO';
 
 type RouteParams = {
-  meal: mealDetailsParams;
+  meal: mealDTO;
 };
 
 export function MealDetails() {
@@ -32,13 +33,13 @@ export function MealDetails() {
   const route = useRoute();
   const { meal } = route.params as RouteParams;
 
-  async function deleteMeal(meal: mealDetailsParams) {
+  async function deleteMeal(meal: mealDTO) {
     await DeleteMeal(meal);
     navigation.goBack();
   }
 
   return (
-    <Container mealType={meal.type}>
+    <Container mealType={meal.healthy}>
       <Header>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <ArrowLeft />
@@ -55,9 +56,9 @@ export function MealDetails() {
           {meal.date} às {meal.hour}
         </DateTime>
         <MealTypeContainer>
-          <MealType mealType={meal.type} />
+          <MealType mealType={meal.healthy} />
           <MealTypeDescription numberOfLines={1}>
-            {meal.type === 'ONDIET' ? 'dentro da dieta' : 'fora da dieta'}
+            {meal.healthy ? 'dentro da dieta' : 'fora da dieta'}
           </MealTypeDescription>
         </MealTypeContainer>
         <ButtonContainer>

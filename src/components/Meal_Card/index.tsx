@@ -1,26 +1,19 @@
 import { TouchableOpacityProps } from 'react-native';
-import {
-  Container,
-  Delimiter,
-  Hour,
-  Meal,
-  MealTypeStatus,
-  mealStatus,
-} from './styles';
+import { Container, Delimiter, Hour, Meal, MealTypeStatus } from './styles';
 
 type Props = TouchableOpacityProps & {
   hour: string;
   meal: string;
-  type: mealStatus;
+  healthy: boolean;
 };
 
-export function Meal_Card({ hour, meal, type, ...rest }: Props) {
+export function Meal_Card({ hour, meal, healthy, ...rest }: Props) {
   return (
     <Container {...rest}>
       <Hour>{hour}</Hour>
       <Delimiter />
       <Meal numberOfLines={1}>{meal}</Meal>
-      <MealTypeStatus type={type} />
+      <MealTypeStatus healthy={healthy} />
     </Container>
   );
 }
