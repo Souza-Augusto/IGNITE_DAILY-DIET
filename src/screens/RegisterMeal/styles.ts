@@ -170,13 +170,3 @@ export const ConfirmRegister = styled(Button)`
   padding-left: 24px;
   padding-right: 24px;
 `;
-export const ErrorMessage = styled.Text`
-  ${({ theme }) => css`
-    color: ${theme.COLORS.RED_DARK};
-    font-family: ${theme.FONT_FAMILY.BOLD};
-    font-size: ${theme.FONT_SIZE.S}px;
-    margin-bottom: 5px;
-    margin-top: 5px;
-    margin-left: 24px;
-  `}
-`;

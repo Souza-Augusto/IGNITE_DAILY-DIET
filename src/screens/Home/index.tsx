@@ -17,9 +17,8 @@ import { Button } from '@components/Button';
 import { Meal_Card } from '@components/Meal_Card';
 import { mealDTO } from 'src/dtos/mealDTO';
 
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
-import { useNavigation } from '@react-navigation/native';
 import { ListEmpty } from '@components/ListEmpty';
 import { mealGetAll } from '@storage/mealGetAll';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -28,7 +27,9 @@ type dateFormattedArrayProps = {
   title: number;
   data: [
     {
+      id: string;
       hour: string;
+      date: string;
       name: string;
       type: 'OUTDIET' | 'ONDIET';
       description: string;
@@ -122,7 +123,11 @@ export function Home() {
         )}
         renderItem={({ item }) => (
           <Meal_Card
-            onPress={() => navigation.navigate('mealDetails')}
+            onPress={() =>
+              navigation.navigate('mealDetails', {
+                meal: item,
+              })
+            }
             hour={item.hour}
             meal={item.name}
             type={item.type}

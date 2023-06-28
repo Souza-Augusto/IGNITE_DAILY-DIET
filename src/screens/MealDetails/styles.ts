@@ -8,9 +8,10 @@ type Props = {
   mealType: 'ONDIET' | 'OUTDIET';
 };
 
-export const Container = styled(SafeAreaView)`
+export const Container = styled(SafeAreaView)<Props>`
   flex: 1;
-  background-color: ${({ theme }) => theme.COLORS.GREEN_LIGHT};
+  background-color: ${({ theme, mealType }) =>
+    mealType === 'ONDIET' ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
   padding-top: 24px;
 `;
 export const Header = styled.View`

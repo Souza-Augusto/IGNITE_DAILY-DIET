@@ -4,12 +4,27 @@ import { Home } from '@screens/Home';
 import { RegisterMeal } from '@screens/RegisterMeal';
 import { Statistics } from '@screens/Statistcs';
 import { MealDetails } from '@screens/MealDetails';
+import { mealDTO } from 'src/dtos/mealDTO';
 
 type routes = {
   home: undefined;
   statistics: undefined;
-  registerMeal: undefined;
-  mealDetails: undefined;
+  registerMeal?: {
+    id: string;
+    hour: string;
+    date: string;
+    name: string;
+    type: 'OUTDIET' | 'ONDIET';
+    description: string;
+  };
+  mealDetails: {
+    id: string;
+    hour: string;
+    date: string;
+    name: string;
+    type: 'OUTDIET' | 'ONDIET';
+    description: string;
+  };
 };
 
 const { Navigator, Screen } = createNativeStackNavigator<routes>();

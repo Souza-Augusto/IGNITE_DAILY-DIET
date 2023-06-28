@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TouchableOpacity, Modal, Alert } from 'react-native';
 import {
   Container,
@@ -22,77 +22,37 @@ import {
   Image,
   ConfirmRegister,
   DateTimeInput,
-  ErrorMessage,
 } from './styles';
 import ArrowLeft from '@assets/images/svg/ArrowLeftBlack.svg';
 import { Button } from '@components/Button';
 import { Input } from '@components/Input';
-import { useNavigation } from '@react-navigation/native';
-import { useForm, Controller } from 'react-hook-form';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigation, useRoute } from '@react-navigation/native';
+
 import { ScrollView } from 'react-native';
-import { mealDTO } from 'src/dtos/mealDTO';
 import { MealCreate } from '@storage/mealCreate';
-import { mealGetAll } from '@storage/mealGetAll';
+import { mealDetailsParams } from 'src/@types/navigate';
+import { DeleteMeal } from '@storage/deleteMeal';
 
-type FormDataProps = {
-  name: string;
-  description: string;
-  date: string;
-  hour: string;
+type RouteParams = {
+  meal: mealDetailsParams;
 };
-
-const registerMealSchema = yup.object({
-  name: yup.string().required('Informe o nome da refeição.'),
-  description: yup.string().required('Informe a descrição da refeição.'),
-  date: yup
-    .string()
-    .required('Campo obrigatório')
-    .matches(/^\d{2}\/\d{2}\/\d{4}$/, 'Formato de data inválido')
-    .test('valid-date', 'Data inválida', (value) => {
-      if (!value) {
-      }
-
-      const [day, month, year] = value.split('/');
-
-      const parsedDay = parseInt(day, 10);
-      const parsedMonth = parseInt(month, 10);
-      const parsedYear = parseInt(year, 10);
-
-      if (
-        parsedDay < 1 ||
-        parsedDay > 31 ||
-        parsedMonth < 1 ||
-        parsedMonth > 12 ||
-        parsedYear < 2023
-      ) {
-        return false;
-      }
-
-      return true;
-    }),
-  hour: yup
-    .string()
-    .required('Campo obrigatório')
-    .matches(/^([01]\d|2[0-3]):([0-5]\d)$/, 'Formato de hora inválido'),
-});
 
 export function RegisterMeal() {
   const [onDiet, setOndiet] = useState('');
   const [outDiet, setOutDiet] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
-  const [storageMeals, setStorageMeals] = useState<mealDTO[]>([]);
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [date, setDate] = useState('');
+  const [hour, setHour] = useState('');
+  const [id, setId] = useState('');
+
+  const currentDate = new Date();
 
   const { goBack, navigate } = useNavigation();
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormDataProps>({
-    resolver: yupResolver(registerMealSchema),
-  });
+  const route = useRoute();
+  const params = route.params as RouteParams;
 
   function selectedMealType(type: string) {
     if (type === 'ONDIET') {
@@ -104,24 +64,98 @@ export function RegisterMeal() {
     setOndiet('');
   }
 
-  async function handleOnOpenModal({
-    name,
-    description,
-    date,
-    hour,
-  }: FormDataProps) {
+  async function handleOnOpenModal() {
+    if (
+      name.trim().length <= 0 ||
+      description.trim().length <= 0 ||
+      date.trim().length <= 0 ||
+      hour.trim().length <= 0
+    ) {
+      return Alert.alert('Preencha todos os campos.');
+    }
+
+    const [day, month, year] = date.split('/');
+
+    const parsedDay = parseInt(day, 10);
+    const parsedMonth = parseInt(month, 10);
+    const parsedYear = parseInt(year, 10);
+
+    if (
+      date.length < 10 ||
+      parsedDay < 1 ||
+      parsedDay > 31 ||
+      parsedMonth < 1 ||
+      parsedMonth > 12 ||
+      parsedYear < 2023
+    ) {
+      return Alert.alert('Formato de data inválido.');
+    }
+
+    const [hours, minutes] = hour.split(':');
+    const parsedHours = parseInt(hours, 10);
+    const parsedMinutes = parseInt(minutes, 10);
+
+    if (
+      hour.length < 5 ||
+      parsedHours < 0 ||
+      parsedHours > 23 ||
+      parsedMinutes < 0 ||
+      parsedMinutes > 59
+    ) {
+      return Alert.alert('Hora inválida.');
+    }
+
     if (onDiet === '' && outDiet === '') {
       return Alert.alert(
         'Por favor informe se a refeição que você deseja está dentro da dieta.'
       );
     }
 
+    if (params?.meal) {
+      await DeleteMeal(params.meal);
+      await MealCreate({
+        title: date,
+        data: [
+          {
+            id: params.meal.id,
+            hour,
+            date,
+            name,
+            type: onDiet ?? outDiet,
+            description,
+          },
+        ],
+      });
+
+      setModalVisible(true);
+      return;
+    }
+
     await MealCreate({
       title: date,
-      data: [{ hour, name, type: onDiet ?? outDiet, description }],
+      data: [
+        {
+          id: String(currentDate.getTime()),
+          hour,
+          date,
+          name,
+          type: onDiet ?? outDiet,
+          description,
+        },
+      ],
     });
     setModalVisible(true);
   }
+
+  useEffect(() => {
+    if (params?.meal) {
+      setId(params?.meal.id);
+      setName(params.meal.name);
+      setDescription(params.meal.description);
+      setDate(params.meal.date);
+      setHour(params.meal.hour);
+    }
+  }, []);
 
   return (
     <Container>
@@ -167,79 +201,48 @@ export function RegisterMeal() {
       <RegisterMealContainer>
         <ScrollView showsVerticalScrollIndicator={false}>
           <InputTitle>Nome</InputTitle>
-          <Controller
-            control={control}
-            name='name'
-            render={({ field: { onChange, value } }) => (
-              <Input
-                placeholder='Ex: Saduíche'
-                value={value}
-                onChangeText={onChange}
-              />
-            )}
+
+          <Input
+            placeholder='Ex: Saduíche'
+            value={name}
+            onChangeText={setName}
           />
-          {errors.name && <ErrorMessage>{errors.name?.message}</ErrorMessage>}
+
           <InputTitle>Descrição</InputTitle>
 
-          <Controller
-            control={control}
-            name='description'
-            render={({ field: { onChange, value } }) => (
-              <InputDescription
-                placeholder='Ex: Sanduíche de pão integral com atum e salada de alface e tomate.'
-                value={value}
-                multiline
-                onChangeText={onChange}
-              />
-            )}
+          <InputDescription
+            placeholder='Ex: Sanduíche de pão integral com atum e salada de alface e tomate.'
+            value={description}
+            multiline
+            onChangeText={setDescription}
           />
-          {errors.description && (
-            <ErrorMessage>{errors.description?.message}</ErrorMessage>
-          )}
+
           <DateTimeInputContainer>
             <InputMaskContainer>
               <DateTime>Data</DateTime>
 
-              <Controller
-                control={control}
-                name='date'
-                render={({ field: { onChange, value } }) => (
-                  <DateTimeInput
-                    placeholder='DD/MM/YYYY'
-                    value={value}
-                    onChangeText={onChange}
-                    type='datetime'
-                    options={{
-                      format: 'DD/MM/YYYY',
-                    }}
-                  />
-                )}
+              <DateTimeInput
+                placeholder='DD/MM/YYYY'
+                value={date}
+                onChangeText={setDate}
+                type='datetime'
+                options={{
+                  format: 'DD/MM/YYYY',
+                }}
               />
-              {errors.date && (
-                <ErrorMessage>{errors.date?.message}</ErrorMessage>
-              )}
             </InputMaskContainer>
             <InputMaskContainer>
               <DateTime>Hora</DateTime>
 
-              <Controller
-                control={control}
-                name='hour'
-                render={({ field: { onChange, value } }) => (
-                  <DateTimeInput
-                    placeholder='00:00'
-                    value={value}
-                    onChangeText={onChange}
-                    type='datetime'
-                    options={{
-                      format: 'HH:mm',
-                    }}
-                  />
-                )}
+              <DateTimeInput
+                placeholder='00:00'
+                value={hour}
+                onChangeText={setHour}
+                type='datetime'
+                options={{
+                  format: 'HH:mm',
+                }}
               />
-              {errors.hour && (
-                <ErrorMessage>{errors.hour?.message}</ErrorMessage>
-              )}
             </InputMaskContainer>
           </DateTimeInputContainer>
           <Question>Está dentro da dieta?</Question>
@@ -263,8 +266,8 @@ export function RegisterMeal() {
 
         <Button
           style={{ marginBottom: 10 }}
-          onPress={handleSubmit(handleOnOpenModal)}
-          title='Cadastrar refeição'
+          onPress={handleOnOpenModal}
+          title={params?.meal ? 'Salvar alterações' : 'Cadastrar refeição'}
         />
       </RegisterMealContainer>
     </Container>

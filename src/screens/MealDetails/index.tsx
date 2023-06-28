@@ -18,12 +18,27 @@ import {
   TrashIcon,
 } from './styles';
 import ArrowLeft from '@assets/images/svg/ArrowLeftBlack.svg';
-import { useNavigation } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
+import { mealDetailsParams } from 'src/@types/navigate';
+import { DeleteMeal } from '@storage/deleteMeal';
+
+type RouteParams = {
+  meal: mealDetailsParams;
+};
 
 export function MealDetails() {
   const navigation = useNavigation();
+
+  const route = useRoute();
+  const { meal } = route.params as RouteParams;
+
+  async function deleteMeal(meal: mealDetailsParams) {
+    await DeleteMeal(meal);
+    navigation.goBack();
+  }
+
   return (
-    <Container>
+    <Container mealType={meal.type}>
       <Header>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <ArrowLeft />
@@ -33,22 +48,26 @@ export function MealDetails() {
         </TitleContainer>
       </Header>
       <DetaisMealContainer>
-        <Meal>Sanduíche</Meal>
-        <Description>
-          Sanduíche de pão integral com atum e salada de alface e tomate
-        </Description>
+        <Meal>{meal.name}</Meal>
+        <Description>{meal.description}</Description>
         <DateTimeTitle>Data e Hora</DateTimeTitle>
-        <DateTime>10/09/2023 às 20:00</DateTime>
+        <DateTime>
+          {meal.date} às {meal.hour}
+        </DateTime>
         <MealTypeContainer>
-          <MealType mealType='ONDIET' />
+          <MealType mealType={meal.type} />
           <MealTypeDescription numberOfLines={1}>
-            dentro da dietaaaaa
+            {meal.type === 'ONDIET' ? 'dentro da dieta' : 'fora da dieta'}
           </MealTypeDescription>
         </MealTypeContainer>
         <ButtonContainer>
-          <Button before={<PencilIcon />} title='Editar Refeição' />
           <Button
-            before={<TrashIcon />}
+            onPress={() => navigation.navigate('registerMeal', { meal })}
+            before={<PencilIcon />}
+            title='Editar Refeição'
+          />
+          <Button
+            onPress={() => deleteMeal(meal)}
             type='SECONDARY'
             title='Excluir Refeição'
           />
