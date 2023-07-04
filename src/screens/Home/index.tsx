@@ -22,6 +22,9 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { ListEmpty } from '@components/ListEmpty';
 import { GetMeals } from '@storage/getMeals';
 
+import { CountMeals } from '@utils/countMeals';
+import { CountHealthyMeals } from '@utils/countHealthyMeals';
+
 type dateFormattedArrayProps = {
   title: number;
   data: mealDTO[];
@@ -33,6 +36,8 @@ type sectionListDataProps = {
 
 export function Home() {
   const [data, setData] = useState<sectionListDataProps[]>([]);
+  const [countMeals, setCountMeals] = useState(0);
+  const [healthyMeals, setHealthyMeals] = useState(0);
 
   function formatDates(dates: dateFormattedArrayProps[]) {
     const formattedttedDates = dates.map((item) => {
@@ -46,6 +51,8 @@ export function Home() {
         title: `${day}.${month}.${year}`,
       };
     });
+    setCountMeals(CountMeals(formattedttedDates));
+    setHealthyMeals(CountHealthyMeals(formattedttedDates));
     setData(formattedttedDates);
   }
 
@@ -71,10 +78,42 @@ export function Home() {
     sortDatesDescending(converttedDates);
   }
 
+  function separateByDate(data: mealDTO[]) {
+    const arrayseparate: sectionListDataProps[] = [];
+
+    data.forEach((obj) => {
+      const data = obj.date;
+      const formattedobject = {
+        id: obj.id,
+        hour: obj.hour,
+        date: obj.date,
+        name: obj.name,
+        healthy: obj.healthy,
+        description: obj.description,
+        createdAt: obj.createdAt,
+        updatedAt: obj.updatedAt,
+      };
+
+      const indexData = arrayseparate.findIndex((item) => item.title === data);
+
+      if (indexData !== -1) {
+        arrayseparate[indexData].data.push(formattedobject);
+      } else {
+        arrayseparate.push({
+          title: data,
+          data: [formattedobject],
+        });
+      }
+    });
+
+    return arrayseparate;
+  }
+
   async function fetchMeals() {
     try {
-      const data = await GetMeals();
-      convertDates(data);
+      const meals = await GetMeals();
+      convertDates(separateByDate(meals));
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -92,11 +131,22 @@ export function Home() {
     <Container>
       <Header />
       <Card
+        percentege={(healthyMeals / countMeals) * 100}
         activeOpacity={0.5}
         onPress={() => navigation.navigate('statistics')}
       >
-        <ArrowUpRightIcon />
-        <CardTitle>90,86%</CardTitle>
+        <ArrowUpRightIcon
+          name='arrow-up-right'
+          size={25}
+          percentege={(healthyMeals / countMeals) * 100}
+        />
+        <CardTitle>
+          {countMeals === 0
+            ? '0,00%'
+            : String(
+                ((healthyMeals / countMeals) * 100).toFixed(2) + '%'
+              ).replace('.', ',')}
+        </CardTitle>
         <CardDescription>das refeições dentro da sua dieta</CardDescription>
       </Card>
       <Title>Refeições</Title>

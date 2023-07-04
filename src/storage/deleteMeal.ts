@@ -5,28 +5,16 @@ import { mealDTO } from 'src/dtos/mealDTO';
 
 export async function DeleteMeal(mealToDelete: mealDTO) {
   try {
-    const storageGroups = await GetMeals();
+    let storageGroups = await GetMeals();
 
-    const existingDateIndex = storageGroups.findIndex(
-      (item) => item.title === mealToDelete.date
+    const updatedData = storageGroups.filter(
+      (meal) => meal.id !== mealToDelete.id
     );
 
-    if (existingDateIndex !== -1) {
-      const existingDate = storageGroups[existingDateIndex];
+    storageGroups = updatedData;
 
-      const updatedData = existingDate.data.filter(
-        (meal) => meal.id !== mealToDelete.id
-      );
-
-      if (updatedData.length > 0) {
-        existingDate.data = updatedData;
-      } else {
-        storageGroups.splice(existingDateIndex, 1);
-      }
-
-      const storage = JSON.stringify(storageGroups);
-      await AsyncStorage.setItem(MEALS_COLLECTION, storage);
-    }
+    const storage = JSON.stringify(storageGroups);
+    await AsyncStorage.setItem(MEALS_COLLECTION, storage);
   } catch (error) {
     throw error;
   }
