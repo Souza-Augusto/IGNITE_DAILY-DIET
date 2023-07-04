@@ -15,7 +15,6 @@ import {
   ButtonContainer,
   Button,
   PencilIcon,
-  TrashIcon,
 } from './styles';
 import ArrowLeft from '@assets/images/svg/ArrowLeftBlack.svg';
 import { useRoute, useNavigation } from '@react-navigation/native';
