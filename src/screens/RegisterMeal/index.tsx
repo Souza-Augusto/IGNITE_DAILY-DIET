@@ -33,6 +33,7 @@ import { ScrollView } from 'react-native';
 import { NewMealRegister } from '@storage/newMealRegister';
 import { DeleteMeal } from '@storage/deleteMeal';
 import { mealDTO } from 'src/dtos/mealDTO';
+import { updateMeal } from '@storage/updateMeal';
 
 type RouteParams = {
   meal: mealDTO;
@@ -101,19 +102,15 @@ export function RegisterMeal() {
     }
 
     if (params?.meal) {
-      await DeleteMeal(params.meal);
-      await NewMealRegister({
-        title: date,
-        data: [
-          {
-            id: params.meal.id,
-            hour,
-            date,
-            name,
-            healthy,
-            description,
-          },
-        ],
+      await updateMeal({
+        id: params.meal.id,
+        hour,
+        date,
+        name,
+        healthy,
+        description,
+        createdAt: params.meal.createdAt,
+        updatedAt: String(currentDate),
       });
 
       setModalVisible(true);
@@ -121,17 +118,14 @@ export function RegisterMeal() {
     }
 
     await NewMealRegister({
-      title: date,
-      data: [
-        {
-          id: String(currentDate.getTime()),
-          hour,
-          date,
-          name,
-          healthy,
-          description,
-        },
-      ],
+      id: String(currentDate.getTime()),
+      hour,
+      date,
+      name,
+      healthy,
+      description,
+      createdAt: String(currentDate),
+      updatedAt: '',
     });
     setModalVisible(true);
   }
