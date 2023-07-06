@@ -1,21 +1,32 @@
 import styled, { css } from 'styled-components/native';
 import { TouchableOpacity } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
 
 export type background = 'GREEN' | 'RED';
-type Props = {
+type CardProps = {
   type?: background;
 };
 
-export const Container = styled.View`
+type DietStatusProps = {
+  percentege: number;
+};
+
+export const Container = styled.View<DietStatusProps>`
   flex: 1;
-  background-color: ${({ theme }) => theme.COLORS.GREEN_LIGHT};
+  background-color: ${({ theme, percentege }) =>
+    percentege >= 50 ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
   padding-top: 24px;
 `;
 
-export const BackIcon = styled(TouchableOpacity)`
+export const BackIconContainer = styled(TouchableOpacity)`
   width: 100%;
   margin-top: 48px;
   padding-left: 24px;
+`;
+
+export const BackIcon = styled(AntDesign)<DietStatusProps>`
+  color: ${({ theme, percentege }) =>
+    percentege >= 50 ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
 `;
 
 export const Percentage = styled.Text`
@@ -94,7 +105,7 @@ export const MealsTypeContainer = styled.View`
   margin-left: 18px;
   margin-right: 18px;
 `;
-export const MealsTypeCard = styled.View<Props>`
+export const MealsTypeCard = styled.View<CardProps>`
   flex: 1;
   background-color: ${({ theme, type }) =>
     type === 'GREEN' ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};

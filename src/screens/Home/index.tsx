@@ -56,13 +56,29 @@ export function Home() {
     setData(formattedttedDates);
   }
 
+  function sortHoursDescending(dates: dateFormattedArrayProps[]) {
+    dates.forEach((item) => {
+      item.data.sort((a, b) => {
+        const hourA = a.hour.split(':');
+        const hourB = b.hour.split(':');
+        return (
+          Number(hourB[0]) - Number(hourA[0]) ||
+          Number(hourB[1]) - Number(hourA[1])
+        );
+      });
+    });
+
+    formatDates(dates);
+  }
+
   function sortDatesDescending(dates: dateFormattedArrayProps[]) {
-    const decendingDates = dates.sort((a, b) => {
+    const formattedDates = dates.sort((a, b) => {
       const dateA = a.title;
       const dateB = b.title;
       return dateB - dateA;
     });
-    formatDates(decendingDates);
+
+    sortHoursDescending(formattedDates);
   }
 
   function convertDates(dates: sectionListDataProps[]) {
@@ -113,7 +129,6 @@ export function Home() {
     try {
       const meals = await GetMeals();
       convertDates(separateByDate(meals));
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -133,7 +148,7 @@ export function Home() {
       <Card
         percentege={(healthyMeals / countMeals) * 100}
         activeOpacity={0.5}
-        onPress={() => navigation.navigate('statistics')}
+        onPress={() => navigation.navigate('statistics', { meals: data })}
       >
         <ArrowUpRightIcon
           name='arrow-up-right'
