@@ -12,9 +12,12 @@ import {
   PlusIcon,
 } from './styles';
 
-import { SectionList } from 'react-native';
+import { Alert, SectionList } from 'react-native';
+
 import { Button } from '@components/Button';
 import { Meal_Card } from '@components/Meal_Card';
+import { Loading } from '@components/Loading';
+
 import { mealDTO } from 'src/dtos/mealDTO';
 
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
@@ -22,8 +25,9 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { ListEmpty } from '@components/ListEmpty';
 import { GetMeals } from '@storage/getMeals';
 
-import { CountMeals } from '@utils/countMeals';
-import { CountHealthyMeals } from '@utils/countHealthyMeals';
+import { CountMeals } from '@utils/meals/countMeals';
+import { CountHealthyMeals } from '@utils/meals/countHealthyMeals';
+import { SeparateByDate } from '@utils/meals/separateByDate';
 
 type dateFormattedArrayProps = {
   title: number;
@@ -38,6 +42,7 @@ export function Home() {
   const [data, setData] = useState<sectionListDataProps[]>([]);
   const [countMeals, setCountMeals] = useState(0);
   const [healthyMeals, setHealthyMeals] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   function formatDates(dates: dateFormattedArrayProps[]) {
     const formattedttedDates = dates.map((item) => {
@@ -94,43 +99,15 @@ export function Home() {
     sortDatesDescending(converttedDates);
   }
 
-  function separateByDate(data: mealDTO[]) {
-    const arrayseparate: sectionListDataProps[] = [];
-
-    data.forEach((obj) => {
-      const data = obj.date;
-      const formattedobject = {
-        id: obj.id,
-        hour: obj.hour,
-        date: obj.date,
-        name: obj.name,
-        healthy: obj.healthy,
-        description: obj.description,
-        createdAt: obj.createdAt,
-        updatedAt: obj.updatedAt,
-      };
-
-      const indexData = arrayseparate.findIndex((item) => item.title === data);
-
-      if (indexData !== -1) {
-        arrayseparate[indexData].data.push(formattedobject);
-      } else {
-        arrayseparate.push({
-          title: data,
-          data: [formattedobject],
-        });
-      }
-    });
-
-    return arrayseparate;
-  }
-
   async function fetchMeals() {
     try {
       const meals = await GetMeals();
-      convertDates(separateByDate(meals));
+      convertDates(SeparateByDate(meals));
     } catch (error) {
       console.log(error);
+      Alert.alert('Refeições', 'Não foi possível carregar as refeições.');
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -141,7 +118,9 @@ export function Home() {
   );
 
   const navigation = useNavigation();
-
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <Container>
       <Header />

@@ -1,4 +1,5 @@
-import { TouchableOpacity } from 'react-native';
+import { useState } from 'react';
+import { Alert, Modal, TouchableOpacity } from 'react-native';
 import {
   Container,
   Header,
@@ -15,6 +16,14 @@ import {
   ButtonContainer,
   Button,
   PencilIcon,
+  DialogContainer,
+  Dialog,
+  DialogTitle,
+  DialogButtonsContainer,
+  CancelButton,
+  ConfirmButton,
+  CancelButtonTitle,
+  ConfirmButtonTitle,
 } from './styles';
 import ArrowLeft from '@assets/images/svg/ArrowLeftBlack.svg';
 import { useRoute, useNavigation } from '@react-navigation/native';
@@ -27,18 +36,52 @@ type RouteParams = {
 };
 
 export function MealDetails() {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const navigation = useNavigation();
 
   const route = useRoute();
   const { meal } = route.params as RouteParams;
 
   async function deleteMeal(meal: mealDTO) {
-    await DeleteMeal(meal);
-    navigation.goBack();
+    try {
+      setModalVisible(false);
+      setLoading(true);
+      await DeleteMeal(meal);
+
+      navigation.goBack();
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Refeição', 'Não foi possível excluir a refeição.');
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
     <Container mealType={meal.healthy}>
+      <Modal transparent visible={modalVisible}>
+        <DialogContainer>
+          <Dialog>
+            <DialogTitle>
+              Deseja realmente excluir o registro da refeição?
+            </DialogTitle>
+            <DialogButtonsContainer>
+              <CancelButton onPress={() => setModalVisible(false)}>
+                <CancelButtonTitle numberOfLines={1}>
+                  Cancelar
+                </CancelButtonTitle>
+              </CancelButton>
+              <ConfirmButton>
+                <ConfirmButtonTitle onPress={() => deleteMeal(meal)}>
+                  Sim, excluir
+                </ConfirmButtonTitle>
+              </ConfirmButton>
+            </DialogButtonsContainer>
+          </Dialog>
+        </DialogContainer>
+      </Modal>
       <Header>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <ArrowLeft />
@@ -67,7 +110,7 @@ export function MealDetails() {
             title='Editar Refeição'
           />
           <Button
-            onPress={() => deleteMeal(meal)}
+            onPress={() => setModalVisible(true)}
             type='SECONDARY'
             title='Excluir Refeição'
           />
