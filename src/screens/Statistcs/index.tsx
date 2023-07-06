@@ -15,8 +15,8 @@ import {
 } from './styles';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { mealDTO } from 'src/dtos/mealDTO';
-import { CountHealthyMeals } from '@utils/countHealthyMeals';
-import { CountMeals } from '@utils/countMeals';
+import { CountHealthyMeals } from '@utils/meals/countHealthyMeals';
+import { CountMeals } from '@utils/meals/countMeals';
 
 type RouteParams = {
   meals: {

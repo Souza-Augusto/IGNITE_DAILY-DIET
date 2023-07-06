@@ -31,9 +31,9 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { ScrollView } from 'react-native';
 import { NewMealRegister } from '@storage/newMealRegister';
-import { DeleteMeal } from '@storage/deleteMeal';
 import { mealDTO } from 'src/dtos/mealDTO';
 import { updateMeal } from '@storage/updateMeal';
+import { Loading } from '@components/Loading';
 
 type RouteParams = {
   meal: mealDTO;
@@ -46,6 +46,7 @@ export function RegisterMeal() {
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [hour, setHour] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const currentDate = new Date();
 
@@ -55,79 +56,87 @@ export function RegisterMeal() {
   const params = route.params as RouteParams;
 
   async function handleOnOpenModal() {
-    if (
-      name.trim().length <= 0 ||
-      description.trim().length <= 0 ||
-      date.trim().length <= 0 ||
-      hour.trim().length <= 0
-    ) {
-      return Alert.alert('Preencha todos os campos.');
-    }
+    try {
+      if (
+        name.trim().length <= 0 ||
+        description.trim().length <= 0 ||
+        date.trim().length <= 0 ||
+        hour.trim().length <= 0
+      ) {
+        return Alert.alert('Preencha todos os campos.');
+      }
 
-    const [day, month, year] = date.split('/');
+      const [day, month, year] = date.split('/');
 
-    const parsedDay = parseInt(day, 10);
-    const parsedMonth = parseInt(month, 10);
-    const parsedYear = parseInt(year, 10);
+      const parsedDay = parseInt(day, 10);
+      const parsedMonth = parseInt(month, 10);
+      const parsedYear = parseInt(year, 10);
 
-    if (
-      date.length < 10 ||
-      parsedDay < 1 ||
-      parsedDay > 31 ||
-      parsedMonth < 1 ||
-      parsedMonth > 12 ||
-      parsedYear < 2023
-    ) {
-      return Alert.alert('Formato de data inválido.');
-    }
+      if (
+        date.length < 10 ||
+        parsedDay < 1 ||
+        parsedDay > 31 ||
+        parsedMonth < 1 ||
+        parsedMonth > 12 ||
+        parsedYear < 2023
+      ) {
+        return Alert.alert('Formato de data inválido.');
+      }
 
-    const [hours, minutes] = hour.split(':');
-    const parsedHours = parseInt(hours, 10);
-    const parsedMinutes = parseInt(minutes, 10);
+      const [hours, minutes] = hour.split(':');
+      const parsedHours = parseInt(hours, 10);
+      const parsedMinutes = parseInt(minutes, 10);
 
-    if (
-      hour.length < 5 ||
-      parsedHours < 0 ||
-      parsedHours > 23 ||
-      parsedMinutes < 0 ||
-      parsedMinutes > 59
-    ) {
-      return Alert.alert('Hora inválida.');
-    }
+      if (
+        hour.length < 5 ||
+        parsedHours < 0 ||
+        parsedHours > 23 ||
+        parsedMinutes < 0 ||
+        parsedMinutes > 59
+      ) {
+        return Alert.alert('Hora inválida.');
+      }
 
-    if (healthy === null) {
-      return Alert.alert(
-        'Por favor informe se a refeição que você deseja está dentro da dieta.'
-      );
-    }
+      if (healthy === null) {
+        return Alert.alert(
+          'Por favor informe se a refeição que você deseja está dentro da dieta.'
+        );
+      }
+      setLoading(true);
+      if (params?.meal) {
+        await updateMeal({
+          id: params.meal.id,
+          hour,
+          date,
+          name,
+          healthy,
+          description,
+          createdAt: params.meal.createdAt,
+          updatedAt: String(currentDate),
+        });
+        setLoading(false);
+        setModalVisible(true);
+        return;
+      }
 
-    if (params?.meal) {
-      await updateMeal({
-        id: params.meal.id,
+      await NewMealRegister({
+        id: String(currentDate.getTime()),
         hour,
         date,
         name,
         healthy,
         description,
-        createdAt: params.meal.createdAt,
-        updatedAt: String(currentDate),
+        createdAt: String(currentDate),
+        updatedAt: '',
       });
-
+      setLoading(false);
       setModalVisible(true);
-      return;
+    } catch (error) {
+      console.log(error);
+      Alert.alert(
+        `Não foi possível${params?.meal ? 'Editar' : 'Cadastrar'} a refeição`
+      );
     }
-
-    await NewMealRegister({
-      id: String(currentDate.getTime()),
-      hour,
-      date,
-      name,
-      healthy,
-      description,
-      createdAt: String(currentDate),
-      updatedAt: '',
-    });
-    setModalVisible(true);
   }
 
   useEffect(() => {
@@ -139,7 +148,9 @@ export function RegisterMeal() {
       setHealthy(params.meal.healthy);
     }
   }, []);
-
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <Container>
       <Modal visible={modalVisible}>
