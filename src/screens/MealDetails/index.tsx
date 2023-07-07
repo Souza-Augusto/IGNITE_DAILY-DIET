@@ -37,25 +37,20 @@ type RouteParams = {
 
 export function MealDetails() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const navigation = useNavigation();
 
   const route = useRoute();
   const { meal } = route.params as RouteParams;
 
-  async function deleteMeal(meal: mealDTO) {
+  async function deleteMeal() {
     try {
       setModalVisible(false);
-      setLoading(true);
       await DeleteMeal(meal);
-
-      navigation.goBack();
+      navigation.navigate('home');
     } catch (error) {
       console.log(error);
       Alert.alert('Refeição', 'Não foi possível excluir a refeição.');
-    } finally {
-      setLoading(false);
     }
   }
 
@@ -74,7 +69,7 @@ export function MealDetails() {
                 </CancelButtonTitle>
               </CancelButton>
               <ConfirmButton>
-                <ConfirmButtonTitle onPress={() => deleteMeal(meal)}>
+                <ConfirmButtonTitle onPress={() => deleteMeal()}>
                   Sim, excluir
                 </ConfirmButtonTitle>
               </ConfirmButton>

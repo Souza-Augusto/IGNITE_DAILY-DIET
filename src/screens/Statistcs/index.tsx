@@ -80,11 +80,13 @@ export function Statistics() {
         />
       </BackIconContainer>
       <Percentage>
-        {String(
-          `${((CountHealthyMeals(meals) / CountMeals(meals)) * 100)
-            .toFixed(2)
-            .replace('.', ',')}${'%'}`
-        )}
+        {CountMeals(meals) === 0
+          ? '0,00%'
+          : String(
+              `${((CountHealthyMeals(meals) / CountMeals(meals)) * 100)
+                .toFixed(2)
+                .replace('.', ',')}${'%'}`
+            )}
       </Percentage>
       <Description>das refeições dentro da sua dieta</Description>
       <StatisticsContainer>
