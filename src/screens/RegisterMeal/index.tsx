@@ -149,7 +149,7 @@ export function RegisterMeal() {
     }
   }, []);
   if (loading) {
-    return <Loading />;
+    <Loading />;
   }
   return (
     <Container>
