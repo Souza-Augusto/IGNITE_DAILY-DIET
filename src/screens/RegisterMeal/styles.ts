@@ -57,8 +57,7 @@ export const InputTitle = styled.Text`
 `;
 
 export const InputDescription = styled(Input)<TextInputProps>`
-  min-height: 120px;
-  max-height: 120px;
+  height: 120px;
 `;
 export const DateTimeInputContainer = styled.View`
   flex-direction: row;
