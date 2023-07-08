@@ -26,6 +26,7 @@ import {
   ConfirmButtonTitle,
 } from './styles';
 import ArrowLeft from '@assets/images/svg/ArrowLeftBlack.svg';
+import Trash from '@assets/images/svg/Trash.svg';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
 import { DeleteMeal } from '@storage/deleteMeal';
@@ -68,10 +69,8 @@ export function MealDetails() {
                   Cancelar
                 </CancelButtonTitle>
               </CancelButton>
-              <ConfirmButton>
-                <ConfirmButtonTitle onPress={() => deleteMeal()}>
-                  Sim, excluir
-                </ConfirmButtonTitle>
+              <ConfirmButton onPress={deleteMeal}>
+                <ConfirmButtonTitle>Sim, excluir</ConfirmButtonTitle>
               </ConfirmButton>
             </DialogButtonsContainer>
           </Dialog>
@@ -105,6 +104,7 @@ export function MealDetails() {
             title='Editar Refeição'
           />
           <Button
+            before={<Trash />}
             onPress={() => setModalVisible(true)}
             type='SECONDARY'
             title='Excluir Refeição'

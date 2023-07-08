@@ -1,6 +1,6 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styled, { css } from 'styled-components/native';
-import { Button as TouchableComponent } from '@components/Button';
+import { Button as ComponentBiutton } from '@components/Button';
 import Pencil from '@assets/images/svg/Simple.svg';
 import Trash from '@assets/images/svg/Trash.svg';
 import { TouchableOpacity } from 'react-native';
@@ -109,7 +109,7 @@ export const ButtonContainer = styled.View`
   justify-content: flex-end;
   align-items: center;
 `;
-export const Button = styled(TouchableComponent)`
+export const Button = styled(ComponentBiutton)`
   margin-top: 8px;
   width: 100%;
 `;
