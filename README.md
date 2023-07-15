@@ -1,8 +1,6 @@
 # DAILYDIET
 
-<p align="center">
-  <img src="./src/assets/logo.png" width=300px>
-</p>
+
 
 > The present project is an App expo managed with a list of tasks using `navigation` e `async storage`. The App covers create, update and delete meals.
 
