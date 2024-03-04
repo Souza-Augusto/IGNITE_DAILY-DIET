@@ -1,9 +1,9 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { Home } from '@screens/Home';
+import { Home } from '@screens/Home/view';
 import { RegisterMeal } from '@screens/RegisterMeal';
 import { Statistics } from '@screens/Statistcs';
-import { MealDetails } from '@screens/MealDetails';
+import { MealDetails } from '@screens/MealDetails/view';
 import { mealDTO } from 'src/dtos/mealDTO';
 
 type routes = {
