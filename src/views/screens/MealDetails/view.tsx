@@ -36,7 +36,7 @@ export function MealDetails() {
   return (
     <Container mealType={meal.healthy}>
       <Dialog
-        visible={dialogVisible}
+        dialogVisible={dialogVisible}
         dialogMessage={dialogMessage}
         positiveFunction={deleteMeal}
         negativeFunction={() => setDialogVisible(false)}
