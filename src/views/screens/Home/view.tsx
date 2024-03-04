@@ -18,7 +18,7 @@ import { Button } from '@components/Button/view';
 import { Meal_Card } from '@components/Meal_Card/view';
 import { Loading } from '@components/Loading/view';
 
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 
 import { ListEmpty } from '@components/ListEmpty/view';
 
@@ -37,6 +37,9 @@ export function Home() {
     setDialogTitle,
     setDialogVisible,
     setLoading,
+    handleNavigateMealDetails,
+    handleNavigateResgisterMeal,
+    handleNavigateStatistcs,
   } = useHomeViewModel();
 
   useFocusEffect(
@@ -51,7 +54,6 @@ export function Home() {
     }, [])
   );
 
-  const navigation = useNavigation();
   if (loading) {
     return <Loading />;
   }
@@ -66,7 +68,7 @@ export function Home() {
       <Card
         percentege={(healthyMeals / countMeals) * 100}
         activeOpacity={0.5}
-        onPress={() => navigation.navigate('statistics', { meals: data })}
+        onPress={handleNavigateStatistcs}
       >
         <ArrowUpRightIcon
           name='arrow-up-right'
@@ -84,7 +86,7 @@ export function Home() {
       </Card>
       <Title>Refeições</Title>
       <Button
-        onPress={() => navigation.navigate('registerMeal')}
+        onPress={handleNavigateResgisterMeal}
         title='Nova refeição'
         before={<PlusIcon />}
       />
@@ -100,11 +102,7 @@ export function Home() {
         )}
         renderItem={({ item }) => (
           <Meal_Card
-            onPress={() =>
-              navigation.navigate('mealDetails', {
-                meal: item,
-              })
-            }
+            onPress={() => handleNavigateMealDetails(item)}
             hour={item.hour}
             meal={item.name}
             healthy={item.healthy}

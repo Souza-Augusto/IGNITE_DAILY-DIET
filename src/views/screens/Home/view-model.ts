@@ -5,6 +5,7 @@ import { CountMeals } from '@utils/meals/countMeals';
 import { CountHealthyMeals } from '@utils/meals/countHealthyMeals';
 import { SeparateByDate } from '@utils/meals/separateByDate';
 import { mealDTO } from '@dtos/mealDTO';
+import { useNavigation } from '@react-navigation/native';
 
 type sectionListDataProps = {
   title: string;
@@ -22,6 +23,9 @@ interface HomeViewModelProps {
   dialogTitle: string;
   setDialogTitle: React.Dispatch<React.SetStateAction<string>>;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  handleNavigateStatistcs: () => void;
+  handleNavigateMealDetails: (item: mealDTO) => void;
+  handleNavigateResgisterMeal: () => void;
 }
 
 function useHomeViewModel(): HomeViewModelProps {
@@ -31,6 +35,8 @@ function useHomeViewModel(): HomeViewModelProps {
   const [loading, setLoading] = useState(true);
   const [dialogVisible, setDialogVisible] = useState(false);
   const [dialogTitle, setDialogTitle] = useState('');
+
+  const { navigate } = useNavigation();
 
   async function fetchMeals() {
     const meals = await GetMeals();
@@ -45,6 +51,19 @@ function useHomeViewModel(): HomeViewModelProps {
 
     setLoading(false);
   }
+
+  function handleNavigateStatistcs() {
+    navigate('statistics', { meals: data });
+  }
+
+  function handleNavigateMealDetails(item: mealDTO) {
+    navigate('mealDetails', { meal: item });
+  }
+
+  function handleNavigateResgisterMeal() {
+    navigate('registerMeal');
+  }
+
   return {
     countMeals,
     data,
@@ -56,6 +75,9 @@ function useHomeViewModel(): HomeViewModelProps {
     setDialogTitle,
     setDialogVisible,
     setLoading,
+    handleNavigateMealDetails,
+    handleNavigateResgisterMeal,
+    handleNavigateStatistcs,
   };
 }
 export { useHomeViewModel };
