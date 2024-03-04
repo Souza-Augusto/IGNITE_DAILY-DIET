@@ -53,7 +53,7 @@ export const CancelButtonTitle = styled.Text`
   `}
 `;
 
-export const ConfirmButton = styled(TouchableOpacity)`
+export const ConfirmButton = styled.TouchableOpacity`
   background-color: ${({ theme }) => theme.COLORS.GRAY_200};
   height: 50px;
   width: 50%;
@@ -71,4 +71,9 @@ export const ConfirmButtonTitle = styled.Text`
     margin-top: 16px;
     margin-bottom: 16px;
   `}
+`;
+
+export const TranparentButton = styled.TouchableOpacity`
+  height: 100%;
+  width: 100%;
 `;

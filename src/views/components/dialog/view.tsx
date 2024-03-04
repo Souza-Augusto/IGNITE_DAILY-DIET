@@ -8,9 +8,11 @@ import {
   CancelButton,
   CancelButtonTitle,
   ConfirmButtonTitle,
+  TranparentButton,
 } from './styles';
 
 export interface Props extends ModalProps {
+  dialogVisible: boolean;
   dialogMessage: string;
   positiveButtonTitle?: string;
   negativeButtonTitle?: string;
@@ -19,6 +21,7 @@ export interface Props extends ModalProps {
 }
 
 export function Dialog({
+  dialogVisible,
   dialogMessage,
   negativeButtonTitle,
   positiveButtonTitle,
@@ -27,25 +30,27 @@ export function Dialog({
   ...rest
 }: Props) {
   return (
-    <Modal transparent {...rest}>
+    <Modal visible={dialogVisible} transparent {...rest}>
       <DialogContainer>
+        <TranparentButton onPress={negativeFunction} />
         <TitleAndButtonContainer>
           <DialogTitle>{dialogMessage}</DialogTitle>
           <DialogButtonsContainer>
-            {negativeFunction && (
+            {negativeButtonTitle && (
               <CancelButton onPress={negativeFunction}>
                 <CancelButtonTitle numberOfLines={1}>
                   {negativeButtonTitle}
                 </CancelButtonTitle>
               </CancelButton>
             )}
-            {positiveFunction && (
+            {positiveButtonTitle && (
               <ConfirmButton onPress={positiveFunction}>
                 <ConfirmButtonTitle>{positiveButtonTitle}</ConfirmButtonTitle>
               </ConfirmButton>
             )}
           </DialogButtonsContainer>
         </TitleAndButtonContainer>
+        <TranparentButton onPress={negativeFunction} />
       </DialogContainer>
     </Modal>
   );
