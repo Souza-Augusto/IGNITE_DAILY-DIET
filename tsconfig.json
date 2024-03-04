@@ -4,13 +4,20 @@
     "strict": true,
     "baseUrl": "./",
     "paths": {
+      "@dtos/*": ["src/dtos/*"],
       "@assets/*": ["./src/assets/*"],
-      "@components/*": ["./src/components/*"],
-      "@routes/*": ["./src/routes/*"],
-      "@screens/*": ["./src/screens/*"],
-      "@storage/*": ["./src/storage/*"],
+      "@components/*": ["./src/views/components/*"],
+      "@view-models/*": ["./src/view-models/*"],
+      "@screens/*": ["./src/views/screens/*"],
+      "@storage/*": ["./src/infra/storage/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@services/*": ["./src/services/*"],
       "@theme/*": ["./src/theme/*"],
-      "@utils/*": ["./src/utils/*"]
+      "@hooks/*": ["./src/hooks/*"],
+      "@contexts/*": ["./src/contexts/*"],
+      "@routes/*": ["./src/routes/*"],
+      "@mappers/*": ["./src/mappers/*"],
+      "@__mocks__/*": ["./src/__mocks__/*"]
     }
   }
 }
