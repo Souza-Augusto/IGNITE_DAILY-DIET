@@ -16,11 +16,14 @@ interface MealDetailsProps {
   deleteMeal: () => void;
   setDialogVisible: Dispatch<React.SetStateAction<boolean>>;
   handleNavigationRegisterMeal: () => void;
+  dialogPositiveButtonTitle: string | null;
 }
 
 function useMealDetailsViewModel(): MealDetailsProps {
   const [dialogVisible, setDialogVisible] = useState(false);
   const [dialogMessage, setDialogMessage] = useState('');
+  const [dialogPositiveButtonTitle, setDialogdialogPositiveButtonTitle] =
+    useState<string | null>('Sim, excluir');
 
   const navigation = useNavigation();
 
@@ -28,7 +31,8 @@ function useMealDetailsViewModel(): MealDetailsProps {
   const { meal } = route.params as RouteParams;
 
   function alert() {
-    setDialogMessage(' Deseja realmente excluir o registro da refeição?');
+    setDialogdialogPositiveButtonTitle('Sim, excluir');
+    setDialogMessage('Deseja realmente excluir o registro da refeição?');
     setDialogVisible(true);
   }
 
@@ -40,6 +44,7 @@ function useMealDetailsViewModel(): MealDetailsProps {
     } catch (error) {
       console.log(error);
       setDialogMessage('Não foi possível excluir a refeição.');
+      setDialogdialogPositiveButtonTitle(null);
       setDialogVisible(true);
     }
   }
@@ -61,6 +66,7 @@ function useMealDetailsViewModel(): MealDetailsProps {
     dialogMessage,
     setDialogVisible,
     handleNavigationRegisterMeal,
+    dialogPositiveButtonTitle,
   };
 }
 
