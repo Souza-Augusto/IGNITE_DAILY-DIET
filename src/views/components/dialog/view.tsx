@@ -14,7 +14,7 @@ import {
 export interface Props extends ModalProps {
   dialogVisible: boolean;
   dialogMessage: string;
-  positiveButtonTitle?: string;
+  positiveButtonTitle?: string | null;
   negativeButtonTitle?: string;
   negativeFunction?: () => void;
   positiveFunction?: () => void;
