@@ -31,6 +31,7 @@ export function MealDetails() {
     handleNavigationRegisterMeal,
     handleGoBack,
     setDialogVisible,
+    dialogPositiveButtonTitle,
   } = useMealDetailsViewModel();
 
   return (
@@ -40,7 +41,7 @@ export function MealDetails() {
         dialogMessage={dialogMessage}
         positiveFunction={deleteMeal}
         negativeFunction={() => setDialogVisible(false)}
-        positiveButtonTitle='Sim,excluir'
+        positiveButtonTitle={dialogPositiveButtonTitle}
         negativeButtonTitle='Não'
       />
 
