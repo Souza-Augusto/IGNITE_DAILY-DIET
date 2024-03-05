@@ -12,6 +12,7 @@ export declare global {
       };
       registerMeal?: { meal?: mealDTO };
       mealDetails: { meal: mealDTO };
+      'status-noticed': { healthy: boolean };
     }
   }
 }
