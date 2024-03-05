@@ -57,11 +57,11 @@ function useHomeViewModel(): HomeViewModelProps {
   }
 
   function handleNavigateMealDetails(item: mealDTO) {
-    navigate('mealDetails', { meal: item });
+    navigate('meal-details', { meal: item });
   }
 
   function handleNavigateResgisterMeal() {
-    navigate('registerMeal');
+    navigate('register-meal');
   }
 
   return {

@@ -10,8 +10,8 @@ export declare global {
           data: mealDTO[];
         }[];
       };
-      registerMeal?: { meal?: mealDTO };
-      mealDetails: { meal: mealDTO };
+      'register-meal'?: { meal?: mealDTO };
+      'meal-details': { meal: mealDTO };
       'status-noticed': { healthy: boolean };
     }
   }

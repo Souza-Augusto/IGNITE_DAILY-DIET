@@ -49,7 +49,7 @@ function useMealDetailsViewModel(): MealDetailsProps {
   }
 
   function handleNavigationRegisterMeal() {
-    navigation.navigate('registerMeal', { meal });
+    navigation.navigate('register-meal', { meal });
   }
 
   return {
