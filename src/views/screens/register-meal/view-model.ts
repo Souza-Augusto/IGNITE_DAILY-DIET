@@ -133,6 +133,7 @@ function useRegisterMealViewModel(): RegisterMealProps {
       setDialogMessage(
         `Não foi possível${params?.meal ? 'Editar' : 'Cadastrar'} a refeição`
       );
+      setDialogVisible(true);
     }
   }
 
