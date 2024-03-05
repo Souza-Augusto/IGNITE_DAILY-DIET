@@ -45,7 +45,9 @@ export function Dialog({
             )}
             {positiveButtonTitle && (
               <ConfirmButton onPress={positiveFunction}>
-                <ConfirmButtonTitle>{positiveButtonTitle}</ConfirmButtonTitle>
+                <ConfirmButtonTitle numberOfLines={1}>
+                  {positiveButtonTitle}
+                </ConfirmButtonTitle>
               </ConfirmButton>
             )}
           </DialogButtonsContainer>
