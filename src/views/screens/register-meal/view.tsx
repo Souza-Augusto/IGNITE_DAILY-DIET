@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { TouchableOpacity, Alert } from 'react-native';
+import { useEffect } from 'react';
+import { TouchableOpacity } from 'react-native';
 import {
   Container,
   Header,
@@ -50,7 +50,6 @@ export function RegisterMeal() {
 
   useEffect(() => {
     if (params?.meal) {
-      console.log('caiu no if', params);
       setName(params?.meal.name);
       setDescription(params?.meal.description);
       setDate(params?.meal.date);
