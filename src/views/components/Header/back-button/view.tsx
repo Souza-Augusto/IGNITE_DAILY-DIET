@@ -1,11 +1,11 @@
 import { BackIconContainer, BackIcon } from './styles';
 import { useBackButtonViewModel } from './view-model';
 
-interface props {
+interface Props {
   color?: string;
 }
 
-export function BackButton({ color }: props) {
+export function BackButton({ color }: Props) {
   const { handleGoBack } = useBackButtonViewModel();
 
   return (
