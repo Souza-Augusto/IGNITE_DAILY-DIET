@@ -1,4 +1,4 @@
-import { mealDTO } from 'src/dtos/mealDTO';
+import { mealDTO } from '@dtos/meal-dto';
 
 export declare global {
   namespace ReactNavigation {
@@ -10,8 +10,9 @@ export declare global {
           data: mealDTO[];
         }[];
       };
-      registerMeal?: { meal?: mealDTO };
-      mealDetails: { meal: mealDTO };
+      'register-meal'?: { meal?: mealDTO };
+      'meal-details': { meal: mealDTO };
+      'status-noticed': { healthy: boolean };
     }
   }
 }

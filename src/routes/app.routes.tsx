@@ -1,16 +1,18 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { Home } from '@screens/Home';
-import { RegisterMeal } from '@screens/RegisterMeal';
-import { Statistics } from '@screens/Statistcs';
-import { MealDetails } from '@screens/MealDetails';
-import { mealDTO } from 'src/dtos/mealDTO';
+import { Home } from '@screens/home/view';
+import { RegisterMeal } from '@screens/register-meal/view';
+import { Statistics } from '@screens/statistcs/view';
+import { MealDetails } from '@screens/meal-details/view';
+import { mealDTO } from '@dtos/meal-dto';
+import { StatusNoticed } from '@screens/status-noticed/view';
 
 type routes = {
   home: undefined;
   statistics: undefined;
-  registerMeal?: mealDTO;
-  mealDetails: mealDTO;
+  'register-meal'?: mealDTO;
+  'meal-details': mealDTO;
+  'status-noticed': { healthy: boolean };
 };
 
 const { Navigator, Screen } = createNativeStackNavigator<routes>();
@@ -20,8 +22,9 @@ export function AppRoutes() {
     <Navigator screenOptions={{ headerShown: false }}>
       <Screen name='home' component={Home} />
       <Screen name='statistics' component={Statistics} />
-      <Screen name='registerMeal' component={RegisterMeal} />
-      <Screen name='mealDetails' component={MealDetails} />
+      <Screen name='register-meal' component={RegisterMeal} />
+      <Screen name='meal-details' component={MealDetails} />
+      <Screen name='status-noticed' component={StatusNoticed} />
     </Navigator>
   );
 }
