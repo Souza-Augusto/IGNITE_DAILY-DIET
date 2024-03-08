@@ -1,7 +1,7 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { NewMealRegister } from '@storage/newMealRegister';
-import { mealDTO } from 'src/dtos/mealDTO';
-import { updateMeal } from '@storage/updateMeal';
+import { NewMealRegister } from '@storage/new-meal-register';
+import { mealDTO } from '@dtos/meal-dto';
+import { updateMeal } from '@storage/update-meal';
 import { useState } from 'react';
 
 type RouteParams = {

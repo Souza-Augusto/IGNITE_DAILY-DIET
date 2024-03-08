@@ -1,7 +1,7 @@
-import { GetMeals } from './getMeals';
+import { GetMeals } from './get-meals';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { MEALS_COLLECTION } from './storageConfig';
-import { mealDTO } from 'src/dtos/mealDTO';
+import { MEALS_COLLECTION } from './storage-config';
+import { mealDTO } from '@dtos/meal-dto';
 
 export async function DeleteMeal(mealToDelete: mealDTO) {
   try {

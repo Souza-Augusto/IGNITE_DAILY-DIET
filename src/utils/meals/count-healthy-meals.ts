@@ -1,17 +1,17 @@
-import { mealDTO } from 'src/dtos/mealDTO';
+import { mealDTO } from '@dtos/meal-dto';
 
 type Props = {
   title: string;
   data: mealDTO[];
 }[];
 
-export function CountOffDietMeals(data: Props) {
+export function CountHealthyMeals(data: Props) {
   try {
     let count = 0;
 
     data.forEach((group) => {
       group.data.forEach((meal) => {
-        if (!meal.healthy) {
+        if (meal.healthy) {
           count++;
         }
       });

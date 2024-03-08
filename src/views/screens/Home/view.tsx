@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { Header } from '@components/Header/view';
+import { Header } from '@components/header';
 import {
   Card,
   CardDescription,
@@ -10,27 +10,27 @@ import {
   Date,
   DateContainer,
   PlusIcon,
+  Logo,
+  Profile,
 } from './styles';
 
 import { SectionList } from 'react-native';
 
-import { Button } from '@components/Button/view';
-import { Meal_Card } from '@components/Meal_Card/view';
-import { Loading } from '@components/Loading/view';
+import { Button } from '@components/button/view';
+import { MealCard } from '@components/meal-card/view';
+import { Loading } from '@components/loading/view';
 
 import { useFocusEffect } from '@react-navigation/native';
 
-import { ListEmpty } from '@components/ListEmpty/view';
+import { ListEmpty } from '@components/list-empty/view';
 
 import { useHomeViewModel } from './view-model';
 import { Dialog } from '@components/dialog/view';
 
 export function Home() {
   const {
-    countMeals,
     data,
     fetchMeals,
-    healthyMeals,
     loading,
     dialogTitle,
     dialogVisible,
@@ -40,6 +40,9 @@ export function Home() {
     handleNavigateMealDetails,
     handleNavigateResgisterMeal,
     handleNavigateStatistcs,
+    arrowIcon,
+    cardColor,
+    percentage,
   } = useHomeViewModel();
 
   useFocusEffect(
@@ -64,24 +67,19 @@ export function Home() {
         dialogVisible={dialogVisible}
         dialogMessage={dialogTitle}
       />
-      <Header />
+      <Header.Root
+        leftElement={<Logo source={require('@assets/images/png/Logo.png')} />}
+        rightElement={
+          <Profile source={require('@assets/images/png/Ellipse.png')} />
+        }
+      />
       <Card
-        percentege={(healthyMeals / countMeals) * 100}
+        color={cardColor}
         activeOpacity={0.5}
         onPress={handleNavigateStatistcs}
       >
-        <ArrowUpRightIcon
-          name='arrow-up-right'
-          size={25}
-          percentege={(healthyMeals / countMeals) * 100}
-        />
-        <CardTitle>
-          {countMeals === 0
-            ? '0,00%'
-            : String(
-                ((healthyMeals / countMeals) * 100).toFixed(2) + '%'
-              ).replace('.', ',')}
-        </CardTitle>
+        <ArrowUpRightIcon name='arrow-up-right' size={25} color={arrowIcon} />
+        <CardTitle>{percentage}</CardTitle>
         <CardDescription>das refeições dentro da sua dieta</CardDescription>
       </Card>
       <Title>Refeições</Title>
@@ -101,7 +99,7 @@ export function Home() {
           </DateContainer>
         )}
         renderItem={({ item }) => (
-          <Meal_Card
+          <MealCard
             onPress={() => handleNavigateMealDetails(item)}
             hour={item.hour}
             meal={item.name}

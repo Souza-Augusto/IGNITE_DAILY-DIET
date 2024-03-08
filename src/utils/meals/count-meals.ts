@@ -1,4 +1,4 @@
-import { mealDTO } from 'src/dtos/mealDTO';
+import { mealDTO } from '@dtos/meal-dto';
 
 type Props = {
   title: string;

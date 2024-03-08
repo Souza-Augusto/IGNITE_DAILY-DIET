@@ -7,7 +7,7 @@ type Props = TouchableOpacityProps & {
   healthy: boolean;
 };
 
-export function Meal_Card({ hour, meal, healthy, ...rest }: Props) {
+export function MealCard({ hour, meal, healthy, ...rest }: Props) {
   return (
     <Container {...rest}>
       <Hour>{hour}</Hour>

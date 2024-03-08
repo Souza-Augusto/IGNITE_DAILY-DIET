@@ -1,6 +1,6 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styled, { css } from 'styled-components/native';
-import { Button as ComponentBiutton } from '@components/Button/view';
+import { Button as ComponentBiutton } from '@components/button/view';
 import Pencil from '@assets/images/svg/Simple.svg';
 import Trash from '@assets/images/svg/Trash.svg';
 

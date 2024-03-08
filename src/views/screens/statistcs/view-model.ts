@@ -1,10 +1,10 @@
 import { useRoute } from '@react-navigation/native';
-import { mealDTO } from 'src/dtos/mealDTO';
-import { CountHealthyMeals } from '@utils/meals/countHealthyMeals';
-import { CountMeals } from '@utils/meals/countMeals';
-import { CountOffDietMeals } from '@utils/meals/countOffDietMeals';
+import { mealDTO } from '@dtos/meal-dto';
+import { CountHealthyMeals } from '@utils/meals/count-healthy-meals';
+import { CountMeals } from '@utils/meals/count-meals';
+import { CountOffDietMeals } from '@utils/meals/count-off-diet-meals';
 import { useState } from 'react';
-import { useTheme } from 'styled-components';
+import { useTheme } from 'styled-components/native';
 
 type sectionListDataProps = {
   title: string;
@@ -28,15 +28,15 @@ interface StatistcsProps {
 }
 
 function useStatiticsViewModel(): StatistcsProps {
+  const { COLORS } = useTheme();
+
   const [mealsMade, setMealsMade] = useState(0);
   const [mealsOnDiet, setMealsOnDiet] = useState(0);
   const [mealsOffDiet, setMealsOffDiet] = useState(0);
   const [bestSequence, setBestSequence] = useState(0);
   const [percentage, setPercentage] = useState('');
-  const [backButtonColor, setBackButtonColor] = useState('');
+  const [backButtonColor, setBackButtonColor] = useState(COLORS.GRAY_200);
   const [backgroundColor, setBackgroundColor] = useState('');
-
-  const { COLORS } = useTheme();
 
   function chooseBackButtonColor() {
     if (CountOffDietMeals(meals) > CountHealthyMeals(meals)) {
@@ -84,8 +84,6 @@ function useStatiticsViewModel(): StatistcsProps {
   }
 
   function calculateStatistcs() {
-    chooseBackButtonColor();
-
     mergeData();
 
     if (CountMeals(meals) === 0) {
@@ -105,6 +103,8 @@ function useStatiticsViewModel(): StatistcsProps {
     setMealsOffDiet(CountOffDietMeals(meals));
 
     setMealsOnDiet(CountHealthyMeals(meals));
+
+    chooseBackButtonColor();
   }
 
   return {
