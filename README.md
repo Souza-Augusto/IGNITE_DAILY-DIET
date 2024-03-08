@@ -46,7 +46,7 @@ For the installation of the project, follow the steps:
 Clone the project:
 
 ```
-git clone https://github.com/RilsonO/daily-diet
+git clone [https://github.com/RilsonO/daily-diet](https://github.com/Souza-Augusto/IGNITE_DAILY-DIET.git)
 ```
 
 Go to project path:
