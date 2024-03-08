@@ -1,9 +1,5 @@
-import { TouchableOpacity } from 'react-native';
 import {
   Container,
-  Header,
-  Title,
-  TitleContainer,
   DetaisMealContainer,
   Meal,
   Description,
@@ -16,10 +12,10 @@ import {
   Button,
   PencilIcon,
 } from './styles';
-import ArrowLeft from '@assets/images/svg/ArrowLeftBlack.svg';
 import Trash from '@assets/images/svg/Trash.svg';
 import { Dialog } from '@components/dialog/view';
 import { useMealDetailsViewModel } from './view-model';
+import { Header } from '@components/header';
 
 export function MealDetails() {
   const {
@@ -45,14 +41,10 @@ export function MealDetails() {
         negativeButtonTitle='Não'
       />
 
-      <Header>
-        <TouchableOpacity onPress={handleGoBack}>
-          <ArrowLeft />
-        </TouchableOpacity>
-        <TitleContainer>
-          <Title>Refeição</Title>
-        </TitleContainer>
-      </Header>
+      <Header.Root>
+        <Header.BackButton />
+        <Header.Title title={'Refeição'} />
+      </Header.Root>
       <DetaisMealContainer>
         <Meal>{meal.name}</Meal>
         <Description>{meal.description}</Description>

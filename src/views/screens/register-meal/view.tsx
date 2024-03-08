@@ -1,12 +1,9 @@
 import { useEffect } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { Header } from '@components/header';
 import {
   Container,
-  Header,
   InputTitle,
   RegisterMealContainer,
-  Title,
-  TitleContainer,
   InputDescription,
   DateTimeInputContainer,
   InputMaskContainer,
@@ -18,12 +15,11 @@ import {
   OffDietButton,
   HealthyMealButton,
 } from './styles';
-import ArrowLeft from '@assets/images/svg/ArrowLeftBlack.svg';
-import { Button } from '@components/Button/view';
-import { Input } from '@components/Input/view';
+import { Button } from '@components/button/view';
+import { Input } from '@components/input/view';
 import { ScrollView } from 'react-native';
 
-import { Loading } from '@components/Loading/view';
+import { Loading } from '@components/loading/view';
 import { useRegisterMealViewModel } from './view-model';
 import { Dialog } from '@components/dialog/view';
 
@@ -34,7 +30,6 @@ export function RegisterMeal() {
     dialogMessage,
     dialogVisible,
     setDialogVisible,
-    handleGoBack,
     healthy,
     hour,
     isLoading,
@@ -68,14 +63,11 @@ export function RegisterMeal() {
         dialogMessage={dialogMessage}
         dialogVisible={dialogVisible}
       />
-      <Header>
-        <TouchableOpacity onPress={handleGoBack}>
-          <ArrowLeft />
-        </TouchableOpacity>
-        <TitleContainer>
-          <Title>Nova refeição</Title>
-        </TitleContainer>
-      </Header>
+      <Header.Root>
+        <Header.BackButton />
+        <Header.Title title={params ? 'Alterar Refeição' : 'Nova refeição'} />
+      </Header.Root>
+
       <RegisterMealContainer>
         <ScrollView showsVerticalScrollIndicator={false}>
           <InputTitle>Nome</InputTitle>

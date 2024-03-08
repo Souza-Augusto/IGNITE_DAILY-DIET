@@ -1,6 +1,4 @@
 import styled, { css } from 'styled-components/native';
-import { TouchableOpacity } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
 
 export type background = 'GREEN' | 'RED';
 type CardProps = {
@@ -16,12 +14,6 @@ export const Container = styled.SafeAreaView<DietStatusProps>`
   background-color: ${({ background }) => background};
 
   padding-top: 24px;
-`;
-
-export const BackIconContainer = styled(TouchableOpacity)`
-  margin-top: 48px;
-  padding-left: 24px;
-  background-color: #c6c6;
 `;
 
 export const Percentage = styled.Text`

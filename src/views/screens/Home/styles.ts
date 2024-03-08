@@ -1,12 +1,11 @@
 import styled, { css } from 'styled-components/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import ArrowUpRight from '@assets/images/svg/ArrowUpRight.svg';
 import Plus from '@assets/images/svg/Plus.svg';
 import { TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
 type CardProps = {
-  percentege: number;
+  color: string;
 };
 
 export const Container = styled(SafeAreaView)`
@@ -14,10 +13,19 @@ export const Container = styled(SafeAreaView)`
   background-color: ${({ theme }) => theme.COLORS.GRAY_700};
   padding-top: 24px;
 `;
+export const Logo = styled.Image`
+  width: 82px;
+  height: 37px;
+`;
+
+export const Profile = styled.Image`
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+`;
 
 export const Card = styled(TouchableOpacity)<CardProps>`
-  background-color: ${({ theme, percentege }) =>
-    percentege >= 50 ? theme.COLORS.GREEN_LIGHT : theme.COLORS.RED_LIGHT};
+  background-color: ${({ color }) => color};
   border-radius: 8px;
   align-items: center;
   justify-content: center;
@@ -46,8 +54,7 @@ export const ArrowUpRightIcon = styled(Feather)<CardProps>`
   align-self: flex-end;
   margin-right: 5px;
   margin-top: 5px;
-  color: ${({ theme, percentege }) =>
-    percentege >= 50 ? theme.COLORS.GREEN_DARK : theme.COLORS.RED_DARK};
+  color: ${({ color }) => color};
 `;
 
 export const Title = styled.Text`
