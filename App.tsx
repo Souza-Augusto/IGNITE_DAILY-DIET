@@ -6,7 +6,7 @@ import {
 } from '@expo-google-fonts/nunito-sans';
 import theme from './src/theme';
 import { StatusBar } from 'react-native';
-import { Loading } from '@components/loading/view';
+import { Loading } from '@components/Loading/view';
 import { Routes } from '@routes/index';
 
 export default function App() {

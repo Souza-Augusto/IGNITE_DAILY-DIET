@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Input } from '@components/input/view';
-import { Button } from '@components/button/view';
+import { Input } from '@components/Input/view';
+import { Button } from '@components/Button/view';
 import { TextInputProps } from 'react-native';
 import { InputMask } from '@components/input-mask/view';
 
