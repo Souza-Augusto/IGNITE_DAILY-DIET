@@ -1,4 +1,4 @@
-import { Button } from '@components/button/view';
+import { Button } from '@components/Button/view';
 import styled, { css } from 'styled-components/native';
 
 type MealTypeProps = {

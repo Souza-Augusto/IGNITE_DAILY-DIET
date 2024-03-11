@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { Header } from '@components/header';
+import { Header } from '@components/Header';
 import {
   Card,
   CardDescription,
@@ -16,9 +16,9 @@ import {
 
 import { SectionList } from 'react-native';
 
-import { Button } from '@components/button/view';
+import { Button } from '@components/Button/view';
 import { MealCard } from '@components/meal-card/view';
-import { Loading } from '@components/loading/view';
+import { Loading } from '@components/Loading/view';
 
 import { useFocusEffect } from '@react-navigation/native';
 

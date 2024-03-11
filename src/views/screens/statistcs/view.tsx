@@ -12,7 +12,7 @@ import {
 } from './styles';
 import { useFocusEffect } from '@react-navigation/native';
 
-import { Header } from '@components/header';
+import { Header } from '@components/Header';
 import { useCallback } from 'react';
 import { useStatiticsViewModel } from './view-model';
 

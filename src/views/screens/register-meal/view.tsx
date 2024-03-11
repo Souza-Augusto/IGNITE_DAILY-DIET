@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Header } from '@components/header';
+import { Header } from '@components/Header';
 import {
   Container,
   InputTitle,
@@ -15,11 +15,11 @@ import {
   OffDietButton,
   HealthyMealButton,
 } from './styles';
-import { Button } from '@components/button/view';
-import { Input } from '@components/input/view';
+import { Button } from '@components/Button/view';
+import { Input } from '@components/Input/view';
 import { ScrollView } from 'react-native';
 
-import { Loading } from '@components/loading/view';
+import { Loading } from '@components/Loading/view';
 import { useRegisterMealViewModel } from './view-model';
 import { Dialog } from '@components/dialog/view';
 

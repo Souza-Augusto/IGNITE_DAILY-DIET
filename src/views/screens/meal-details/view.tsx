@@ -15,7 +15,7 @@ import {
 import Trash from '@assets/images/svg/Trash.svg';
 import { Dialog } from '@components/dialog/view';
 import { useMealDetailsViewModel } from './view-model';
-import { Header } from '@components/header';
+import { Header } from '@components/Header';
 
 export function MealDetails() {
   const {
