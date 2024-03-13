@@ -1,12 +1,6 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { NewMealRegister } from '@storage/new-meal-register';
-import { mealDTO } from '@dtos/meal-dto';
-import { updateMeal } from '@storage/update-meal';
 import { useState } from 'react';
-
-type RouteParams = {
-  meal: mealDTO;
-};
 
 export interface RegisterMealProps {
   healthy: boolean;
@@ -23,9 +17,7 @@ export interface RegisterMealProps {
   dialogVisible: boolean;
   setDialogVisible: React.Dispatch<React.SetStateAction<boolean>>;
   dialogMessage: string;
-  handleGoBack: () => void;
   handleRegisterMeal: () => void;
-  params?: RouteParams;
 }
 
 function useRegisterMealViewModel(): RegisterMealProps {
@@ -40,10 +32,7 @@ function useRegisterMealViewModel(): RegisterMealProps {
 
   const currentDate = new Date();
 
-  const { goBack, navigate } = useNavigation();
-
-  const route = useRoute();
-  const params = route.params as RouteParams;
+  const { navigate } = useNavigation();
 
   async function handleRegisterMeal() {
     try {
@@ -100,21 +89,6 @@ function useRegisterMealViewModel(): RegisterMealProps {
         return;
       }
       setIsLoading(true);
-      if (params) {
-        await updateMeal({
-          id: params?.meal.id,
-          hour,
-          date,
-          name,
-          healthy: healthy as boolean,
-          description,
-          createdAt: params?.meal.createdAt,
-          updatedAt: String(currentDate),
-        });
-        setIsLoading(false);
-        navigate('status-noticed', { healthy: healthy as boolean });
-        return;
-      }
 
       await NewMealRegister({
         id: String(currentDate.getTime()),
@@ -130,15 +104,9 @@ function useRegisterMealViewModel(): RegisterMealProps {
       navigate('status-noticed', { healthy: healthy as boolean });
     } catch (error) {
       console.log(error);
-      setDialogMessage(
-        `Não foi possível${params?.meal ? 'Editar' : 'Cadastrar'} a refeição`
-      );
+      setDialogMessage(`Não foi possível Cadastrar a refeição`);
       setDialogVisible(true);
     }
-  }
-
-  function handleGoBack() {
-    goBack();
   }
 
   return {
@@ -147,7 +115,6 @@ function useRegisterMealViewModel(): RegisterMealProps {
     dialogMessage,
     dialogVisible,
     setDialogVisible,
-    handleGoBack,
     healthy: healthy as boolean,
     hour,
     isLoading,
@@ -158,7 +125,6 @@ function useRegisterMealViewModel(): RegisterMealProps {
     setHour,
     setName,
     handleRegisterMeal,
-    params,
   };
 }
 
