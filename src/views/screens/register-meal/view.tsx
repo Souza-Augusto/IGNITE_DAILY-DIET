@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Header } from '@components/Header';
 import {
   Container,
@@ -40,18 +39,8 @@ export function RegisterMeal() {
     setHour,
     setName,
     handleRegisterMeal,
-    params,
   } = useRegisterMealViewModel();
 
-  useEffect(() => {
-    if (params?.meal) {
-      setName(params?.meal.name);
-      setDescription(params?.meal.description);
-      setDate(params?.meal.date);
-      setHour(params?.meal.hour);
-      setHealthy(params?.meal.healthy);
-    }
-  }, []);
   if (isLoading) {
     <Loading />;
   }
@@ -65,7 +54,7 @@ export function RegisterMeal() {
       />
       <Header.Root>
         <Header.BackButton />
-        <Header.Title title={params ? 'Alterar Refeição' : 'Nova refeição'} />
+        <Header.Title title={'Nova refeição'} />
       </Header.Root>
 
       <RegisterMealContainer>
@@ -137,7 +126,7 @@ export function RegisterMeal() {
         <Button
           style={{ marginBottom: 10 }}
           onPress={handleRegisterMeal}
-          title={params?.meal ? 'Salvar alterações' : 'Cadastrar refeição'}
+          title='Cadastrar refeição'
         />
       </RegisterMealContainer>
     </Container>
