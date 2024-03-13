@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Header } from '@components/Header';
 import {
   Container,
@@ -19,10 +20,10 @@ import { Input } from '@components/Input/view';
 import { ScrollView } from 'react-native';
 
 import { Loading } from '@components/Loading/view';
-import { useRegisterMealViewModel } from './view-model';
+import { useMealUpdateViewModel } from './view-model';
 import { Dialog } from '@components/dialog/view';
 
-export function RegisterMeal() {
+export function MealUpdate() {
   const {
     date,
     description,
@@ -38,9 +39,13 @@ export function RegisterMeal() {
     setHealthy,
     setHour,
     setName,
-    handleRegisterMeal,
-  } = useRegisterMealViewModel();
+    handleMealUpdate,
+    fetchData,
+  } = useMealUpdateViewModel();
 
+  useEffect(() => {
+    fetchData();
+  }, []);
   if (isLoading) {
     <Loading />;
   }
@@ -54,7 +59,7 @@ export function RegisterMeal() {
       />
       <Header.Root>
         <Header.BackButton />
-        <Header.Title title={'Nova refeição'} />
+        <Header.Title title='Alterar Refeição' />
       </Header.Root>
 
       <RegisterMealContainer>
@@ -125,8 +130,8 @@ export function RegisterMeal() {
 
         <Button
           style={{ marginBottom: 10 }}
-          onPress={handleRegisterMeal}
-          title='Cadastrar refeição'
+          onPress={handleMealUpdate}
+          title='Salvar alterações'
         />
       </RegisterMealContainer>
     </Container>

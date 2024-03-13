@@ -1,8 +1,13 @@
-import { useNavigation } from '@react-navigation/native';
-import { NewMealRegister } from '@storage/new-meal-register';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { mealDTO } from '@dtos/meal-dto';
+import { updateMeal } from '@storage/update-meal';
 import { useState } from 'react';
 
-export interface RegisterMealProps {
+type RouteParams = {
+  meal: mealDTO;
+};
+
+export interface MealUpdateProps {
   healthy: boolean;
   setHealthy: React.Dispatch<React.SetStateAction<boolean>>;
   name: string;
@@ -17,10 +22,11 @@ export interface RegisterMealProps {
   dialogVisible: boolean;
   setDialogVisible: React.Dispatch<React.SetStateAction<boolean>>;
   dialogMessage: string;
-  handleRegisterMeal: () => void;
+  handleMealUpdate: () => void;
+  fetchData: () => void;
 }
 
-function useRegisterMealViewModel(): RegisterMealProps {
+function useMealUpdateViewModel(): MealUpdateProps {
   const [healthy, setHealthy] = useState<boolean | null>(null);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -34,7 +40,18 @@ function useRegisterMealViewModel(): RegisterMealProps {
 
   const { navigate } = useNavigation();
 
-  async function handleRegisterMeal() {
+  const route = useRoute();
+  const params = route.params as RouteParams;
+
+  function fetchData() {
+    setName(params?.meal.name);
+    setDescription(params?.meal.description);
+    setDate(params?.meal.date);
+    setHour(params?.meal.hour);
+    setHealthy(params?.meal.healthy);
+  }
+
+  async function handleMealUpdate() {
     try {
       if (
         name.trim().length <= 0 ||
@@ -90,21 +107,21 @@ function useRegisterMealViewModel(): RegisterMealProps {
       }
       setIsLoading(true);
 
-      await NewMealRegister({
-        id: String(currentDate.getTime()),
+      await updateMeal({
+        id: params?.meal.id,
         hour,
         date,
         name,
         healthy: healthy as boolean,
         description,
-        createdAt: String(currentDate),
-        updatedAt: '',
+        createdAt: params?.meal.createdAt,
+        updatedAt: String(currentDate),
       });
       setIsLoading(false);
       navigate('status-noticed', { healthy: healthy as boolean });
     } catch (error) {
       console.log(error);
-      setDialogMessage(`Não foi possível Cadastrar a refeição`);
+      setDialogMessage(`Não foi possível alterar a refeição`);
       setDialogVisible(true);
     }
   }
@@ -124,8 +141,9 @@ function useRegisterMealViewModel(): RegisterMealProps {
     setHealthy: setHealthy as React.Dispatch<React.SetStateAction<boolean>>,
     setHour,
     setName,
-    handleRegisterMeal,
+    handleMealUpdate,
+    fetchData,
   };
 }
 
-export { useRegisterMealViewModel };
+export { useMealUpdateViewModel };

@@ -54,7 +54,7 @@ function useMealDetailsViewModel(): MealDetailsProps {
   }
 
   function handleNavigationRegisterMeal() {
-    navigation.navigate('register-meal', { meal });
+    navigation.navigate('meal-update', { meal });
   }
 
   return {
