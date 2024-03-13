@@ -6,6 +6,7 @@ import { Statistics } from '@screens/statistcs/view';
 import { MealDetails } from '@screens/meal-details/view';
 import { mealDTO } from '@dtos/meal-dto';
 import { StatusNoticed } from '@screens/status-noticed/view';
+import { MealUpdate } from '@screens/meal-update/view';
 
 type routes = {
   home: undefined;
@@ -13,6 +14,7 @@ type routes = {
   'register-meal'?: mealDTO;
   'meal-details': mealDTO;
   'status-noticed': { healthy: boolean };
+  'meal-update': mealDTO;
 };
 
 const { Navigator, Screen } = createNativeStackNavigator<routes>();
@@ -25,6 +27,7 @@ export function AppRoutes() {
       <Screen name='register-meal' component={RegisterMeal} />
       <Screen name='meal-details' component={MealDetails} />
       <Screen name='status-noticed' component={StatusNoticed} />
+      <Screen name='meal-update' component={MealUpdate} />
     </Navigator>
   );
 }
