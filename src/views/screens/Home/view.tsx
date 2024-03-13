@@ -34,9 +34,7 @@ export function Home() {
     loading,
     dialogTitle,
     dialogVisible,
-    setDialogTitle,
     setDialogVisible,
-    setLoading,
     handleNavigateMealDetails,
     handleNavigateResgisterMeal,
     handleNavigateStatistcs,
@@ -47,13 +45,7 @@ export function Home() {
 
   useFocusEffect(
     useCallback(() => {
-      try {
-        fetchMeals();
-      } catch (error) {
-        setLoading(false);
-        setDialogTitle('Não foi possível carregar as refeições.');
-        setDialogVisible(true);
-      }
+      fetchMeals();
     }, [])
   );
 

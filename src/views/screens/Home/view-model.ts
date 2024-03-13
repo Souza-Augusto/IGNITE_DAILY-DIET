@@ -73,15 +73,22 @@ function useHomeViewModel(): HomeViewModelProps {
   }
 
   async function fetchMeals() {
-    const meals = await GetMeals();
+    try {
+      setLoading(true);
+      const meals = await GetMeals();
 
-    const separateByDates = SeparateByDate(meals);
+      const separateByDates = SeparateByDate(meals);
 
-    calculatePercentage(separateByDates);
+      calculatePercentage(separateByDates);
 
-    setData(separateByDates);
+      setData(separateByDates);
 
-    setLoading(false);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setDialogTitle('Não foi possível carregar as refeições.');
+      setDialogVisible(true);
+    }
   }
 
   function handleNavigateStatistcs() {
