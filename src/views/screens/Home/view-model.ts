@@ -4,7 +4,7 @@ import { useTheme } from 'styled-components/native';
 import { CountMeals } from '@utils/meals/count-meals';
 import { CountHealthyMeals } from '@utils/meals/count-healthy-meals';
 import { SeparateByDate } from '@utils/meals/separate-by-date';
-import { mealDTO } from '@dtos/meal-dto';
+import { mealDTO } from '@dtos/meal-dtos';
 import { useNavigation } from '@react-navigation/native';
 import { CountOffDietMeals } from '@utils/meals/count-off-diet-meals';
 

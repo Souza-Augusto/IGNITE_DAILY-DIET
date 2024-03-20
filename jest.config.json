@@ -1,6 +1,9 @@
 {
   "preset": "jest-expo",
-  "setupFilesAfterEnv": ["@testing-library/jest-native/extend-expect"],
+  "setupFilesAfterEnv": [
+    "@testing-library/jest-native/extend-expect",
+    "@testing-library/react-native/extend-expect"
+  ],
   "setupFiles": [
     "./src/__tests__/mocks/async-storage.ts",
     "./src/__tests__/mocks/navigation.ts"

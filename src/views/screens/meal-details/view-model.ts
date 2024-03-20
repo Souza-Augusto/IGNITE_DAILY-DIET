@@ -1,6 +1,6 @@
 import { useState, Dispatch } from 'react';
 import { useRoute, useNavigation } from '@react-navigation/native';
-import { mealDTO } from '@dtos/meal-dto';
+import { mealDTO } from '@dtos/meal-dtos';
 import { DeleteMeal } from '@storage/delete-meal';
 
 type RouteParams = {

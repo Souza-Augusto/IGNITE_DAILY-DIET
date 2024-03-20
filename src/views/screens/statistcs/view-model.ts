@@ -1,18 +1,13 @@
 import { useRoute } from '@react-navigation/native';
-import { mealDTO } from '@dtos/meal-dto';
+import { mealDTO, listMealDTO } from '@dtos/meal-dtos';
 import { CountHealthyMeals } from '@utils/meals/count-healthy-meals';
 import { CountMeals } from '@utils/meals/count-meals';
 import { CountOffDietMeals } from '@utils/meals/count-off-diet-meals';
 import { useState } from 'react';
 import { useTheme } from 'styled-components/native';
 
-type sectionListDataProps = {
-  title: string;
-  data: mealDTO[];
-};
-
 type RouteParams = {
-  meals: sectionListDataProps[];
+  meals: listMealDTO[];
 };
 
 interface StatistcsProps {
