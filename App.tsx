@@ -1,4 +1,3 @@
-import '@testing-library/react-native/extend-expect';
 import { ThemeProvider } from 'styled-components';
 import {
   useFonts,
